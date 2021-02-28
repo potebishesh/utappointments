@@ -6,6 +6,7 @@ var fname = document.getElementById("fname");
 var lname = document.getElementById("lname");
 var email = document.getElementById("email");
 var key = document.getElementById("key");
+var utaid = document.getElementById("utaid");
 var date = document.getElementById("date");
 var time = document.getElementById("time");
 var button = document.getElementById("submit");
@@ -26,6 +27,9 @@ function bookAppointment() {
     else if(!key.value) {
         return alert("Please enter the key given by the instructor this semester!");
     }
+    else if(!utaid.value) {
+        return alert("Please enter your UTA ID!");
+    }
     else if(!date.value) {
         return alert("Please enter a date!");
     }
@@ -33,7 +37,8 @@ function bookAppointment() {
         return alert("Please specify a time to book an appointment!");
     }
 
-    console.log("Appointment Booked");
+    var apt = new Appointment(date.value, new Student(`${fname.value} ${lname.value}`, utaid.value, 2021), 15);
+    alert(`Appointment booked for ${apt.getStudent.getName} on ${apt.getDate} for ${apt.timeLength} minutes.`);
 }
 
 
