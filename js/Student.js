@@ -1,4 +1,4 @@
-class Student {
+export default class Student {
     constructor(name, onlineId, year) {
         this.name = name;
         this.onlineId = onlineId;
