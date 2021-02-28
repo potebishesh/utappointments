@@ -1,23 +1,45 @@
 import Student from "./Student.js";
+import Appointment from "./Appointment.js";
 
+//initiate all data on form
+var fname = document.getElementById("fname");
+var lname = document.getElementById("lname");
+var email = document.getElementById("email");
+var key = document.getElementById("key");
+var date = document.getElementById("date");
+var time = document.getElementById("time");
 var button = document.getElementById("submit");
-if(!button) {
-    console.log("Couldn't find button!");
-}
 
-button.addEventListener("click", sayHello);
+button.addEventListener("click", bookAppointment);
 
-function sayHello() {
-    var fname = document.getElementById("fname").value;
-    var lname = document.getElementById("lname").value;
+function bookAppointment() {
+    
+    if(!fname.value) {
+        return alert("Please enter your first name!");
+    }
+    else if(!lname.value) {
+        return alert("Please enter your last name!");
+    }
+    else if(!email.value) {
+        return alert("Please enter your email address!");
+    }
+    else if(!key.value) {
+        return alert("Please enter the key given by the instructor this semester!");
+    }
+    else if(!date.value) {
+        return alert("Please enter a date!");
+    }
+    else if(!time.value) {
+        return alert("Please specify a time to book an appointment!");
+    }
 
-    console.log(`Hello ${fname} ${lname}`);
+    console.log("Appointment Booked");
 }
 
 
 
 // Disable some dates ****************
-document.getElementById('appdate').onchange = function(e){
+document.getElementById('date').onchange = function(e){
     var tempDate = new Date(e.target.value);
 
     const currDate = new Date();

@@ -1,4 +1,4 @@
-class Appointment {
+export default class Appointment {
     constructor(date, student, timeLength) {
         this.date = date;
         this.student = student;
