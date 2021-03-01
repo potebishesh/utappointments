@@ -5,8 +5,13 @@ body{
     text-align: center;
 }
 
+.header_logo{ 
+    margin-right: 95%;
+}
+
 
 .buttons{
+
     display: inline-block;
 }
 
