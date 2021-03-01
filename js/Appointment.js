@@ -1,8 +1,8 @@
 export default class Appointment {
-    constructor(date, student, timeLength) {
+    constructor(date, student, time) {
         this.date = date;
         this.student = student;
-        this.timeLength = timeLength;
+        this.time = time;
     }
 
     get getDate() {
@@ -13,8 +13,8 @@ export default class Appointment {
         return this.student;
     }
 
-    get getTimeLength() {
-        return this.timeLength
+    get getTime() {
+        return this.time
     }
     
 }

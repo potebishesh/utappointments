@@ -2,7 +2,6 @@ export default class Student {
     constructor(name, onlineId, year) {
         this.name = name;
         this.onlineId = onlineId;
-        this.year = year;
     }
 
     get getName() {
@@ -12,10 +11,5 @@ export default class Student {
     get getId() {
         return this.onlineId;
     }
-
-    get getYear() {
-        return this.year;
-    }
-
 
 }

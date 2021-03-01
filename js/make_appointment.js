@@ -37,8 +37,9 @@ function bookAppointment() {
         return alert("Please specify a time to book an appointment!");
     }
 
-    var apt = new Appointment(date.value, new Student(`${fname.value} ${lname.value}`, utaid.value, 2021), 15);
-    alert(`Appointment booked for ${apt.getStudent.getName} on ${apt.getDate} for ${apt.timeLength} minutes.`);
+    var apt = new Appointment(date.value, new Student(`${fname.value} ${lname.value}`, utaid.value), time.value);
+    //send to database here
+    alert(`Appointment booked for ${apt.getStudent.getName} on ${apt.getDate} at ${apt.getTime}.`);
 }
 
 
