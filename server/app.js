@@ -23,10 +23,14 @@ app.post('/insert', (request, response) => {
 
 // read
 app.get('/getAll', (request, response) => {
-    console.log('test');
+    response.json({
+        sucess: true
+    });
 });
 
 // update
 
 
-// delete route
+// delete 
+
+app.listen(process.env.PORT, () => console.log('app is running'));
