@@ -1,3 +1,5 @@
+// app.js is our back-end. It gets API calls from the front-end and does things.
+
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -6,6 +8,9 @@ const { response } = require('express');
 
 // allows us to access our environment config when we need to
 dotenv.config();          
+
+//
+const dbService = require('./dbService');
 
 // when we have incoming API call, won't block and we can send to backend
 app.use(cors());       
@@ -23,6 +28,10 @@ app.post('/insert', (request, response) => {
 
 // read
 app.get('/getAll', (request, response) => {
+    // Grab DbService object.
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.getAllData();
     response.json({
         sucess: true
     });
