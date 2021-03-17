@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended : false }));
 
 // create
 app.post('/insert', (request, response) => {
-
+    console.log(request.body);
 });
 
 // read
@@ -32,9 +32,11 @@ app.get('/getAll', (request, response) => {
     const db = dbService.getDbServiceInstance();
 
     const result = db.getAllData();
-    response.json({
-        sucess: true
-    });
+
+    result
+    .then(data => response.json({data : data}))
+    .catch(error => console.log(error));
+    
 });
 
 // update
