@@ -38,6 +38,19 @@ app.get('/getAll', (request, response) => {
     .catch(error => console.log(error));
 });
 
+app.get('/getKeys', (request, response) => {
+    // Grab DbService object.
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.getKeysData();
+
+    result
+    .then(data => response.json({data : data}))
+    .catch(error => console.log(error));
+});
+
+
+
 // update
 
 

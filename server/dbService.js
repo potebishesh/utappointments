@@ -41,7 +41,7 @@ class DbService {
     }
 
     // Using a async to get our data
-    async getAll() {
+    async getAllData() {
         try {
             // Creating a new promise in which will handle our query.
             // We will either resolve or reject the query.
@@ -49,6 +49,33 @@ class DbService {
             const response = await new Promise((resolve, reject) => {
                 // The query statement.
                 const query = "SELECT * FROM appointment";
+                // To parameterize data selection:
+                // const query = "SELECT * FROM appointments WHERE id = ?";
+
+                connection.query(query, (error, results) => {
+                    if (error) reject(new Error(error.message));
+                    resolve(results);
+                });
+                // To parameterize data selection:
+                // connect.query(query, [id]);
+            });
+
+            console.log(response);
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // Using a async to get our appointment keys
+    async getKeysData() {
+        try {
+            // Creating a new promise in which will handle our query.
+            // We will either resolve or reject the query.
+            // If rejected, will go into catch block.
+            const response = await new Promise((resolve, reject) => {
+                // The query statement.
+                const query = "SELECT * FROM app_keys";
                 // To parameterize data selection:
                 // const query = "SELECT * FROM appointments WHERE id = ?";
 
