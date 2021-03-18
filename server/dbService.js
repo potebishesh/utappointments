@@ -41,7 +41,7 @@ class DbService {
     }
 
     // Using a async to get our data
-    async getAllData() {
+    async getAll() {
         try {
             // Creating a new promise in which will handle our query.
             // We will either resolve or reject the query.
