@@ -1,20 +1,22 @@
 import Student from "./Student.js";
 import Appointment from "./Appointment.js";
+//const { response } = require("express");
+
 
 //initiate all data on form
-var fname = document.getElementById("fname");
-var lname = document.getElementById("lname");
-var email = document.getElementById("email");
-var key = document.getElementById("key");
-var utaid = document.getElementById("utaid");
-var date = document.getElementById("date");
-var time = document.getElementById("time");
+
 var button = document.getElementById("submit");
 
 button.addEventListener("click", bookAppointment);
 
 function bookAppointment() {
-    
+    var fname = document.getElementById("fname");
+    var lname = document.getElementById("lname");
+    var email = document.getElementById("email");
+    var key = document.getElementById("key");
+    var date = document.getElementById("date");
+    var time = document.getElementById("time");
+    console.log(fname.value);
     if(!fname.value) {
         return alert("Please enter your first name!");
     }
@@ -27,9 +29,6 @@ function bookAppointment() {
     else if(!key.value) {
         return alert("Please enter the key given by the instructor this semester!");
     }
-    else if(!utaid.value) {
-        return alert("Please enter your UTA ID!");
-    }
     else if(!date.value) {
         return alert("Please enter a date!");
     }
@@ -38,6 +37,22 @@ function bookAppointment() {
     }
 
     var apt = new Appointment(date.value, new Student(`${fname.value} ${lname.value}`, utaid.value, 2021), 15);
+
+    // *** Send data to server for inserting to database
+    
+    fetch('http://localhost:5000/insertAppointment',{
+        headers: {
+            'Content-type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({fname : fname.value, lname: lname.value, email: email.value, key: key.value, date: date.value, time: time.value})
+    })
+    .then(response => response.json())
+
+    // ***
+    
+
+
     alert(`Appointment booked for ${apt.getStudent.getName} on ${apt.getDate} for ${apt.timeLength} minutes.`);
 }
 

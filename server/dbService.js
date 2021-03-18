@@ -29,7 +29,7 @@ connection.connect((error) => {
     if  (error) {
         console.log(error.message);
     }
-    console.log('db ' + connection.state);
+    console.log('db' + connection.state);
 });
 
 // This class contains all the functions used to insert, delete, get data.
@@ -48,7 +48,7 @@ class DbService {
             // If rejected, will go into catch block.
             const response = await new Promise((resolve, reject) => {
                 // The query statement.
-                const query = "SELECT * FROM appointments";
+                const query = "SELECT * FROM appointment";
                 // To parameterize data selection:
                 // const query = "SELECT * FROM appointments WHERE id = ?";
 

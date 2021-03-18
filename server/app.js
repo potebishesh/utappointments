@@ -36,7 +36,6 @@ app.get('/getAll', (request, response) => {
     result
     .then(data => response.json({data : data}))
     .catch(error => console.log(error));
-    
 });
 
 // update
