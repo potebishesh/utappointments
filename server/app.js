@@ -9,7 +9,7 @@ const { response } = require('express');
 // allows us to access our environment config when we need to
 dotenv.config();          
 
-//
+// imports dbservice class we exported so we can use it
 const dbService = require('./dbService');
 
 // when we have incoming API call, won't block and we can send to backend
@@ -55,5 +55,6 @@ app.get('/getKeys', (request, response) => {
 
 
 // delete 
+
 
 app.listen(process.env.PORT, () => console.log('app is running'));
