@@ -7,36 +7,31 @@ import Appointment from "./Appointment.js";
 
 var button = document.getElementById("submit");
 
-var realkey = "pineapple";
-
-button.addEventListener("click", bookAppointment);
+button.addEventListener("click", checkKeys);
 
 function bookAppointment() {
+
     var fname = document.getElementById("fname");
     var lname = document.getElementById("lname");
     var email = document.getElementById("email");
-    var key = document.getElementById("key");
     var date = document.getElementById("date");
     var time = document.getElementById("time");
-    console.log(fname.value);
+
 
     if(!fname.value) {
         return alert("Please enter your first name!");
     }
-    else if(regex.test(fname.value)) {
-        return alert("First name cannot have integer within it!")
-    }
+    //else if(regex.test(fname.value)) {
+      //  return alert("First name cannot have integer within it!")
+    //}
     else if(!lname.value) {
         return alert("Please enter your last name!");
     }
-    else if(regex.test(lname.value)) {
-        return alert("Last name cannot have integer within it!")
-    }
+    //else if(regex.test(lname.value)) {
+      //  return alert("Last name cannot have integer within it!")
+    //}
     else if(!email.value) {
         return alert("Please enter your email address!");
-    }
-    else if(!key.value) {
-        return alert("Please enter the key given by the instructor this semester!");
     }
     else if(!date.value) {
         return alert("Please enter a date!");
@@ -48,7 +43,7 @@ function bookAppointment() {
     var apt = new Appointment(date.value, new Student(`${fname.value} ${lname.value}`, utaid.value, 2021), 15);
 
     // *** Send data to server for inserting to database
-    
+    /*
     fetch('http://localhost:5000/insertAppointment',{
         headers: {
             'Content-type': 'application/json'
@@ -57,11 +52,8 @@ function bookAppointment() {
         body: JSON.stringify({fname : fname.value, lname: lname.value, email: email.value, key: key.value, date: date.value, time: time.value})
     })
     .then(response => response.json())
-
-    // ***
-    
-
-
+    */
+    // ***  
     alert(`Appointment booked for ${apt.getStudent.getName} on ${apt.getDate} for ${apt.timeLength} minutes.`);
 }
 
@@ -87,4 +79,31 @@ document.getElementById('date').onchange = function(e){
         e.target.value = '';
     }
 };
-// ****************
+// 
+
+// Checks if key matches
+function checkKeys(){
+    fetch('http://localhost:5000/getKeys')
+    .then(response => response.json())
+    .then(data => {
+        var keyBool = new Boolean(false);
+        var key = document.getElementById("key");
+
+        var temp = data['data'];
+        for(var i = 0; i < temp.length; i++)
+        {
+            if(key.value == temp[i].app_key)
+            {
+                keyBool = true;
+                console.log('Key matched in the database.');
+            }
+        }
+        if(keyBool == true){
+            bookAppointment();
+        }
+        else{
+            console.log('Key does not match in the database.');
+            return alert('Key does not match. Retry or contact instructor.');
+        }       
+    });
+}
