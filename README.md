@@ -9,16 +9,21 @@ Go to our github repository: https://github.com/twestbrook09/CSE3311-WebApp
 Download/Clone the repository.  
 In the main folder, open “index.html” with a web browser (Eg.Google Chrome).  
 
-
 ### Documentation:
 https://docs.google.com/document/d/1olBxjYKcjPXCY4DLDj05zYgYOF5RVmVbUcX-wEYVFaM/edit
 
-### Packages Used:
+### Dependencies:
 cors: allows API calls from front end to backend  
 dotenv: place to store configs for our database like passwords, good practice for security reasons  
 express: a robust framework for creating web and mobile apps  
 mysql: lets us interface with mySQL server and make queries  
-nodemon: updates the server so don't have to restart script all the time, it'll watch for us
+nodemon: updates the server so don't have to restart script all the time, it'll watch for us  
+bcrypt: lets us hash passwords
+
+### Application Structure:
+app.js: Entry point to our application.  
+public: Folder containing our html/css/images  
+js:     Folder containing scripts for our html pages  
 
 ### How to Use Nodemon:
 Change to be in server directory and use the command in terminal 'nodemon app'.    

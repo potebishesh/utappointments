@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+   <head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+
+      <title>UTAppointments</title>
+   </head>	
+   <body>
+       <main>
+        <h1>Welcome to UTAppointments</h1>
+
+        <div class="buttons">
+            <a href="/login" class="body_button"> 
+                Instructor Login
+            </a>
+            <a href="/appointment" class="body_button"> 
+                Office Hours Appointment
+            </a>
+            <a href="/about" class="body_button"> 
+                About
+            </a>
+            <a href="/contact" class="body_button"> 
+                Contact Mahin
+            </a>
+        </div>
+
+        <table id="table">
+            <thead>
+                <th>appointment_id</th>
+                <th>student_email</th>
+                <th>date</th>
+                <th>time</th>
+                <th>Delete</th>
+                <th>Edit</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <section hidden id="update-row">
+            <label>Name:</label>
+            <input type="text" id="update-name-input">
+            <button id="update-row-btn">Update</button>
+        </section>
+    </main>
+    <script src="js/index.js"></script>
+   </body>	
+</html>
