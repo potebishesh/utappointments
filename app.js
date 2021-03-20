@@ -1,32 +1,34 @@
 // app.js is our back-end. It gets API calls from the front-end and does things.
 
 const express = require('express');
-const app = express();
+const bcrpyt = require('bcrypt');
 const cors = require('cors');
 const dotenv = require('dotenv');
+
+// Express setup
+const app = express();
 const { response, request } = require('express');
-const bcrpyt = require('bcrypt');
 
-// allows us to access our environment config when we need to
-dotenv.config();          
-
-// imports dbservice class we exported so we can use it
-const dbService = require('./dbService');
+dotenv.config();                            // Allows us to access our environment config when we need to.        
+const dbService = require('./dbService');   // Imports dbservice class we exported so we can use it.
 
 app.use(cors());                                        // When we have incoming API call, won't block and we can send to backend.       
 app.use(express.json());                                // Send API call in json format.      
 app.use(express.urlencoded({ extended : false }));      // Tell app we want to use data we send from front-end.
 
-app.use(express.static('public'));
-app.engine('html', require('ejs').renderFile);   
-app.set('views', __dirname + '/views');      
-app.set('view engine', 'html');         
+app.use(express.static('public'));                      // Tell express our static files are in public/
+app.engine('html', require('ejs').renderFile);          // Render HTML with ejs
+app.set('views', __dirname + '/views');                 // Set view's folder to right path
+app.set('view engine', 'html');                         // Set view engine to HTML instead of EJS
+
+// TODO Create seperate files for routing
 
 // create
 app.post('/insert', (request, response) => {
     console.log(request.body);
 });
 
+// Tyler's function
 app.patch('/updateKey', (request, response) => {
     const {app_key} = request.body;
     const db = dbService.getDbServiceInstance();
@@ -60,7 +62,6 @@ app.get('/getKeys', (request, response) => {
     .then(data => response.json({data : data}))
     .catch(error => console.log(error));
 });
-
 
 
 // update
