@@ -4,27 +4,31 @@ Team members: Bailey, Bishesh, Tyler
 ### Vision Statement:
 “Simple aesthetic, easy to follow, and easy setup for making office hours appointments”  
 
-### Code Compilation Instruction:
-Go to our github repository: https://github.com/twestbrook09/CSE3311-WebApp  
-Download/Clone the repository.  
-In the main folder, open “index.html” with a web browser (Eg.Google Chrome).  
+# Documentation:
 
-### Documentation:
 https://docs.google.com/document/d/1olBxjYKcjPXCY4DLDj05zYgYOF5RVmVbUcX-wEYVFaM/edit
 
-### Dependencies:
-cors: allows API calls from front end to backend  
-dotenv: place to store configs for our database like passwords, good practice for security reasons  
-express: a robust framework for creating web and mobile apps  
-mysql: lets us interface with mySQL server and make queries  
-nodemon: updates the server so don't have to restart script all the time, it'll watch for us  
-bcrypt: lets us hash passwords
+# Getting Started
 
-### Application Structure:
-app.js: Entry point to our application.  
-public: Folder containing our html/css/images  
-js:     Folder containing scripts for our html pages  
+To get the Node server running locally:
 
-### How to Use Nodemon:
-Change to be in server directory and use the command in terminal 'nodemon app'.    
-Done.
+ - Clone this repo
+ - `npm install` to install all required dependencies
+ - `nodemon app.js` to start the local server
+
+# Code Overview
+
+## Dependencies:
+ - cors - allows API calls from front end to backend  
+ - dotenv - place to store configs for our database like passwords, good practice for security reasons  
+ - express - a robust framework for creating web and mobile apps  
+ - mysql - lets us interface with mySQL server and make queries  
+ - nodemon - updates the server so don't have to restart script all the time, it'll watch for us  
+ - bcrypt - lets us hash passwords
+
+## Application Structure:
+ - `app.js` - File used to start web server.  
+ - `controllers/` - Folder containing business logic like UserController.js or AnalyticsController.js.
+ - `public/` - Folder containing image/js/css files.
+ - `routes/` - Folder containing routing logic.
+ - `views/` - Folder containing HTML/ejs files.
