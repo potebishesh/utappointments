@@ -40,7 +40,7 @@ function bookAppointment() {
         return alert("Please specify a time to book an appointment!");
     }
 
-    var apt = new Appointment(date.value, new Student(`${fname.value} ${lname.value}`, utaid.value, 2021), 15);
+    var apt = new Appointment(date.value, new Student(`${fname.value} ${lname.value}`, email.value, 2021), 15);
 
     // *** Send data to server for inserting to database
     /*
