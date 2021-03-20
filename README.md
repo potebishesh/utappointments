@@ -21,5 +21,5 @@ mysql: lets us interface with mySQL server and make queries
 nodemon: updates the server so don't have to restart script all the time, it'll watch for us
 
 ### How to Use Nodemon:
-Change to be in server directory and use the command in terminal 'nodemon app'.
+Change to be in server directory and use the command in terminal 'nodemon app'.    
 Done.
