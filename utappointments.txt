@@ -1,0 +1,47 @@
+CREATE DATABASE utappointment;
+
+CREATE TABLE student
+(
+  	st_fname VARCHAR(20) NOT NULL,
+  	st_lname VARCHAR(20) NOT NULL,
+ 	st_email VARCHAR(40) NOT NULL,
+ 	PRIMARY KEY(st_email)
+);
+
+CREATE TABLE appointment
+(
+    ref_num INT NOT NULL AUTO_INCREMENT,
+    app_date DATE NOT NULL,
+    app_time TIME NOT NULL,
+    email VARCHAR(40) NOT NULL,
+    app_timestamp TIMESTAMP NOT NULL,
+    PRIMARY KEY(ref_num),
+    FOREIGN KEY(email) REFERENCES student(st_email)  
+);
+
+CREATE TABLE instructor
+(
+    in_fname VARCHAR(20) NOT NULL,
+	in_lname VARCHAR(20) NOT NULL,
+	in_email VARCHAR(40) NOT NULL,
+	in_uname VARCHAR(20) NOT NULL,
+	in_pwd VARCHAR(20) NOT NULL,
+	PRIMARY KEY(in_uname)
+);
+
+CREATE TABLE app_keys
+(
+	app_key VARCHAR(20) NOT NULL,
+    PRIMARY KEY(app_key)
+);
+
+CREATE TABLE availability
+(
+	# 0 represent sunday
+	day INT NOT NULL,
+	start_time TIME NOT NULL,
+	end_time TIME NOT NULL,
+    PRIMARY KEY(day, start_time)
+);
+
+
