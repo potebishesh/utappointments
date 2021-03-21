@@ -95,34 +95,35 @@ app.get('/getKeys', (req, response) => {
 
 // delete 
 
-const users = [];
+//const users = [];
 
 
 /******************************************************************************************************************
 *********************************************ROUTING FUNCTIONS*****************************************************
 ******************************************************************************************************************/
 
-// // Requiring files that contain our router objects
-// const register = require("./routes/register.js");
-// const about = require("./routes/about.js");
-// const login = require("./routes/login.js");
-// const appointment = require("./routes/appointment.js");
-// const contact = require("./routes/contact.js");
-// const index = require("./routes/index.js");
-// const instructor_main = require("./routes/instructor_main.js");
-// const logout = require("./routes/logout.js");
+//  Requiring files that contain our router objects
+const register = require("./routes/register.js");
+const about = require("./routes/about.js");
+const login = require("./routes/login.js");
+const appointment = require("./routes/appointment.js");
+const contact = require("./routes/contact.js");
+const index = require("./routes/index.js");
+const instructor_main = require("./routes/instructor_main.js");
+const logout = require("./routes/logout.js");
 
 // // Use the router objects to route these API calls.
 // // Use the .js file to handle endpoints that start with URL
-// app.use("/register", register);
-// app.use("/about", about);                   
-// app.use("/login", login);
-// app.use("/appointment", appointment);
-// app.use("/contact", contact);
-// app.use("/instructor_main", instructor_main);
-// app.use("/", index);
-// app.use("/logout", logout);
+app.use("/register", register);
+app.use("/about", about);                   
+app.use("/login", login);
+app.use("/appointment", appointment);
+app.use("/contact", contact);
+app.use("/instructor_main", instructor_main);
+app.use("/", index);
+app.use("/logout", logout );
 
+/*
 app.get('/about', (req, response) => {
     response.render('about');
 });
@@ -174,6 +175,8 @@ app.delete('/logout', (req, response) => {   //app.delete ran by method override
 app.get('/', (request, response) => {
     response.render('index.html');
 });
+*/
+
 
 
 /******************************************************************************************************************
