@@ -12,7 +12,7 @@ Below is an example of content inside .env file.
 PORT=5000
 USER=admin
 PASSWORD=test123
-DATABASE=utappointments
+DATABASE=utappointment
 DB_PORT=3306
 HOST=localhost
 */

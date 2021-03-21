@@ -14,6 +14,8 @@ To get the Node server running locally:
 
  - Clone this repo
  - `npm install` to install all required dependencies
+ - Create .env file and insert required environment variables (see dbService.js)
+ - Make sure MySQL server is running locally on machine with correct database
  - `nodemon app.js` to start the local server
 
 # Code Overview
