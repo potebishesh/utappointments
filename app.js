@@ -111,6 +111,8 @@ const contact = require("./routes/contact.js");
 const index = require("./routes/index.js");
 const instructor_main = require("./routes/instructor_main.js");
 const logout = require("./routes/logout.js");
+const update_key = require("./routes/update_key.js");
+const office_hours = require("./routes/office_hours.js")
 
 // // Use the router objects to route these API calls.
 // // Use the .js file to handle endpoints that start with URL
@@ -122,6 +124,8 @@ app.use("/contact", contact);
 app.use("/instructor_main", instructor_main);
 app.use("/", index);
 app.use("/logout", logout );
+app.use("/update_key", update_key)
+app.use("/office_hours", office_hours);
 
 /*
 app.get('/about', (req, response) => {
