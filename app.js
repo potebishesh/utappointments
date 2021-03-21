@@ -43,7 +43,7 @@ app.patch('/updateKey', (request, response) => {
 });
 
 // read
-app.get('/getAll', (request, response) => {
+app.get('/getAll', (req, response) => {
     // Grab DbService object.
     const db = dbService.getDbServiceInstance();
 
@@ -54,7 +54,7 @@ app.get('/getAll', (request, response) => {
     .catch(error => console.log(error));
 });
 
-app.get('/getKeys', (request, response) => {
+app.get('/getKeys', (req, response) => {
     // Grab DbService object.
     const db = dbService.getDbServiceInstance();
 
@@ -73,21 +73,22 @@ app.get('/getKeys', (request, response) => {
 
 const users = [];
 
+
 // ROUTING
+// Requiring files that contain our router objects
 const about = require("./routes/about.js");
-app.use("/about", about);                   // Use the about.js file to handle endpoints that start with /about
-
 const login = require("./routes/login.js");
-app.use("/login", login);
-
 const appointment = require("./routes/appointment.js");
-app.use("/appointment", appointment);
-
 const contact = require("./routes/contact.js");
-app.use("/contact", contact);
-
 const index = require("./routes/index.js");
+
+// Use the router objects to route these API calls.
+// Use the .js file to handle endpoints that start with URL
+app.use("/about", about);                   
+app.use("/login", login);
+app.use("/appointment", appointment);
+app.use("/contact", contact);
 app.use("/", index);
 
-
+// Run the webserver on specified port in .env file.
 app.listen(process.env.PORT, () => console.log('app is running'));
