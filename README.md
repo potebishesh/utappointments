@@ -25,6 +25,11 @@ To get the Node server running locally:
  - mysql - lets us interface with mySQL server and make queries  
  - nodemon - updates the server so don't have to restart script all the time, it'll watch for us  
  - bcrypt - lets us hash passwords
+ - passport - persist a logged in user until they time-out or click the log out button
+ - passport-local - allows us to use usernames and passwords for logging in
+ - express-session - stores and persists logged in user across webpages
+ - express-flash - for popping up messages on screen
+ - method-override - overrides POST method inside HTML to run another specified function
 
 ## Application Structure:
  - `app.js` - File used to start web server.  
