@@ -46,6 +46,20 @@ body{
     min-width: 250px;
 }
 
+.register_input{
+    text-align: center;
+    display: block;
+    border: solid;
+    border-width: 1px;
+    color: #003B46;
+    text-decoration: none;
+    background-color: white;
+    border-radius: 0px;
+    padding: 7px 15px;
+    margin-bottom: 10px;
+    
+    min-width: 250px;
+}
 
 
 .submit_button{
@@ -64,7 +78,7 @@ body{
     background-color: black;
 }
 
-.forgot_password{
+.links{
     display: block;
     text-decoration: none;
     font-size: 12px;
