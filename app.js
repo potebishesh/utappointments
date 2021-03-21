@@ -21,6 +21,8 @@ app.engine('html', require('ejs').renderFile);          // Render HTML with ejs
 app.set('views', __dirname + '/views');                 // Set view's folder to right path
 app.set('view engine', 'html');                         // Set view engine to HTML instead of EJS
 
+
+
 // TODO Create seperate files for routing
 
 // create
@@ -69,30 +71,23 @@ app.get('/getKeys', (request, response) => {
 
 // delete 
 
+const users = [];
 
 // ROUTING
-const users = [];
-app.get('/about', (req, response) => {
-    response.render('about');
-});
+const about = require("./routes/about.js");
+app.use("/about", about);                   // Use the about.js file to handle endpoints that start with /about
 
-app.get('/login', (req, response) => {
-    response.render('instructor_login.html');
-});
-app.post('/login', async (req, response) => {
+const login = require("./routes/login.js");
+app.use("/login", login);
 
-});
+const appointment = require("./routes/appointment.js");
+app.use("/appointment", appointment);
 
-app.get('/appointment', (req, response) => {
-    response.render('make_appointment.html');
-});
+const contact = require("./routes/contact.js");
+app.use("/contact", contact);
 
-app.get('/contact', (req, response) => {
-    response.render('contact.html');
-});
+const index = require("./routes/index.js");
+app.use("/", index);
 
-app.get('/', (request, response) => {
-    response.render('index.html');
-});
 
 app.listen(process.env.PORT, () => console.log('app is running'));
