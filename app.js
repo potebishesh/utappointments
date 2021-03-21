@@ -21,6 +21,8 @@ app.engine('html', require('ejs').renderFile);          // Render HTML with ejs
 app.set('views', __dirname + '/views');                 // Set view's folder to right path
 app.set('view engine', 'html');                         // Set view engine to HTML instead of EJS
 
+
+
 // TODO Create seperate files for routing
 
 // create
@@ -41,7 +43,7 @@ app.patch('/updateKey', (request, response) => {
 });
 
 // read
-app.get('/getAll', (request, response) => {
+app.get('/getAll', (req, response) => {
     // Grab DbService object.
     const db = dbService.getDbServiceInstance();
 
@@ -52,7 +54,7 @@ app.get('/getAll', (request, response) => {
     .catch(error => console.log(error));
 });
 
-app.get('/getKeys', (request, response) => {
+app.get('/getKeys', (req, response) => {
     // Grab DbService object.
     const db = dbService.getDbServiceInstance();
 
@@ -69,30 +71,24 @@ app.get('/getKeys', (request, response) => {
 
 // delete 
 
+const users = [];
+
 
 // ROUTING
-const users = [];
-app.get('/about', (req, response) => {
-    response.render('about');
-});
+// Requiring files that contain our router objects
+const about = require("./routes/about.js");
+const login = require("./routes/login.js");
+const appointment = require("./routes/appointment.js");
+const contact = require("./routes/contact.js");
+const index = require("./routes/index.js");
 
-app.get('/login', (req, response) => {
-    response.render('instructor_login.html');
-});
-app.post('/login', async (req, response) => {
+// Use the router objects to route these API calls.
+// Use the .js file to handle endpoints that start with URL
+app.use("/about", about);                   
+app.use("/login", login);
+app.use("/appointment", appointment);
+app.use("/contact", contact);
+app.use("/", index);
 
-});
-
-app.get('/appointment', (req, response) => {
-    response.render('make_appointment.html');
-});
-
-app.get('/contact', (req, response) => {
-    response.render('contact.html');
-});
-
-app.get('/', (request, response) => {
-    response.render('index.html');
-});
-
+// Run the webserver on specified port in .env file.
 app.listen(process.env.PORT, () => console.log('app is running'));
