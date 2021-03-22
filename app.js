@@ -76,6 +76,7 @@ app.get('/getAll', (req, response) => {
     .catch(error => console.log(error));
 });
 
+// Obtain appointment keys from the database.
 app.get('/getKeys', (req, response) => {
     // Grab DbService object.
     const db = dbService.getDbServiceInstance();
@@ -86,6 +87,19 @@ app.get('/getKeys', (req, response) => {
     .then(data => response.json({data : data}))
     .catch(error => console.log(error));
 });
+
+// Obtain office hours availability from the database.
+app.get('/getAvailability', (req, response) => {
+    // Grab DbService object.
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.getAvailabilityData();
+
+    result
+    .then(data => response.json({data : data}))
+    .catch(error => console.log(error));
+});
+
 
 
 // update
