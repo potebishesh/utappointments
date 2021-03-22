@@ -1,15 +1,21 @@
-console.log('debug');
 // Once page has loaded, do the stuff inside here.
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('debug');
-    table.innerHTML = "<tr><td class='no-data' colspan='6'>No Data</td></tr>";
-    loadHTMLTable(NULL);
-    /*
     fetch('http://localhost:5000/getAll')
     .then(response => response.json())
     .then(data => loadHTMLTable(data['data']));
-    */
 });
+
+document.querySelector('table tbody').addEventListener('click', function(event) {
+    if (event.target.className === "delete-row-btn") {
+        deleteRowById(event.target.dataset.id);
+    }
+    if (event.target.className === "edit-row-btn") {
+        handleEditRow(event.target.dataset.id);
+    }
+});
+
+const updateBtn = document.querySelector('#update-row-btn');
+const searchBtn = document.querySelector('#search-btn');
 
 // Obtain data from make appointment
 const bookApptBtn = document.querySelector('#submit');

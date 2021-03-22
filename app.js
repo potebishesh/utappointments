@@ -20,6 +20,9 @@ initializePassport(
     username => users.find(user => user.username === username)  //deserialize user
 );
 
+// Stores our userss
+const users = [];
+
 // Express setup
 const app = express();
 const { response, request } = require('express');
@@ -47,12 +50,8 @@ app.set('views', __dirname + '/views');                 // Set view's folder to 
 app.set('view engine', 'html');                         // Set view engine to HTML instead of EJS
 
 
-// create
-app.post('/insert', (request, response) => {
-    console.log(request.body);
-});
 
-
+// Bishesh's Function
 app.patch('/updateKey', (request, response) => {
     const {app_key} = request.body;
     const db = dbService.getDbServiceInstance();
@@ -62,18 +61,6 @@ app.patch('/updateKey', (request, response) => {
     .then(data => response.json({success : data}))
     .catch(err => console.log(err));
     
-});
-
-// read
-app.get('/getAll', (req, response) => {
-    // Grab DbService object.
-    const db = dbService.getDbServiceInstance();
-
-    const result = db.getAllData();
-
-    result
-    .then(data => response.json({data : data}))
-    .catch(error => console.log(error));
 });
 
 // Obtain appointment keys from the database.
@@ -102,14 +89,28 @@ app.get('/getAvailability', (req, response) => {
 
 
 
+// create
+app.post('/insert', (request, response) => {
+    console.log(request.body);
+});
+
+// read
+app.get('/getAll', (req, response) => {
+    // Grab DbService object.
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.getAllData();
+
+    result
+    .then(data => response.json({data : data}))
+    .catch(error => console.log(error));
+});
+
 // update
 
 
 // delete 
 
-
-// Stores our userss
-const users = [];
 
 
 // Requiring files that contain our router objects
