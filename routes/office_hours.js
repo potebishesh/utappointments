@@ -3,7 +3,7 @@ const express = require("express");
 let router = express.Router();
 
 router.get('/', (req, response) => { //checkAuthenticated for if user is not already logged in, cannot access instructor's main page
-    response.render('instructor_main.html');
+    response.render('office_hours.html');
 });
 
 function checkAuthenticated(req, response, next) {
