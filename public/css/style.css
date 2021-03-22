@@ -46,6 +46,26 @@ body{
     min-width: 250px;
 }
 
+.drop_down{
+    font-size: 12px;
+    padding: 4px 15px;
+}
+
+.update_hours{
+    border: none;
+    color: #C4DFE6;
+    text-decoration: none;
+    background-color: #003B46;
+    border-radius: 12px;
+    padding: 7px 15px;
+    margin-bottom: 10px;
+    min-width: 250px;
+}
+
+.update_hours:hover{
+    background-color: black;
+}
+
 .register_input{
     text-align: center;
     display: block;
@@ -89,13 +109,16 @@ body{
 
 table {
     margin: 50px auto;
+    font-size: 15px;
+    background-color: white;
 }
 
 table, th, td {
     border-collapse: collapse;
-    border: 1px solid #000;
+    border: 0.5px solid #000;
+    
 }
 
 th, td {
-    padding: 5px;
+    padding: 10px;
 }
