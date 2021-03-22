@@ -46,15 +46,12 @@ app.set('views', __dirname + '/views');                 // Set view's folder to 
 app.set('view engine', 'html');                         // Set view engine to HTML instead of EJS
 
 
-
-// TODO Create seperate files for routing
-
 // create
 app.post('/insert', (request, response) => {
     console.log(request.body);
 });
 
-// Tyler's function
+
 app.patch('/updateKey', (request, response) => {
     const {app_key} = request.body;
     const db = dbService.getDbServiceInstance();
@@ -95,14 +92,12 @@ app.get('/getKeys', (req, response) => {
 
 // delete 
 
-//const users = [];
+
+// Stores our users
+const users = [];
 
 
-/******************************************************************************************************************
-*********************************************ROUTING FUNCTIONS*****************************************************
-******************************************************************************************************************/
-
-//  Requiring files that contain our router objects
+// Requiring files that contain our router objects
 const register = require("./routes/register.js");
 const about = require("./routes/about.js");
 const login = require("./routes/login.js");
@@ -114,8 +109,8 @@ const logout = require("./routes/logout.js");
 const update_key = require("./routes/update_key.js");
 const office_hours = require("./routes/office_hours.js")
 
-// // Use the router objects to route these API calls.
-// // Use the .js file to handle endpoints that start with URL
+// Use the router objects to route these API calls.
+// Use the .js file to handle endpoints that start with URL
 app.use("/register", register);
 app.use("/about", about);                   
 app.use("/login", login);
@@ -127,81 +122,6 @@ app.use("/logout", logout );
 app.use("/update_key", update_key)
 app.use("/office_hours", office_hours);
 
-/*
-app.get('/about', (req, response) => {
-    response.render('about');
-});
-
-app.get('/login', checkNotAuthenticated, (req, response) => {           //checkNotAuthenticated for if user is already logged in, don't go back to login page
-    response.render('instructor_login.html');
-});
-
-app.post('/login', checkNotAuthenticated, passport.authenticate('local', {  //checkNotAuthenticated for if user is already logged in, don't re-log in
-    successRedirect: '/instructor_main',
-    failureRedirect: '/login',
-    failureFlash: true
-}));
-
-app.get('/contact', (req, response) => {
-    response.render('contact.html');
-});
-
-app.get('/instructor_main', checkAuthenticated, (req, response) => { //checkAuthenticated for if user is not already logged in, cannot access instructor's main page
-    response.render('instructor_main.html');
-});
-
-app.get('/register', checkNotAuthenticated, (req, response) => {  //checkNotAuthenticated for if user is already logged in, don't go back to register page
-    response.render('instructor_register.html');
-});
-
-app.post('/register', checkNotAuthenticated, async (req, response) => {  //checkNotAuthenticated for if user is already logged in, don't run register POST
-    try {                                                               //Try to hash password, if it fails then redirect back to register page
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        users.push({
-            fname: req.body.fname,
-            lname: req.body.lname,
-            email: req.body.email,
-            username: req.body.username,
-            password: hashedPassword
-        });
-        response.redirect('/login');
-    } catch {
-        response.redirect('/instructor_register');
-    }
-    console.log(users);
-});
-
-app.delete('/logout', (req, response) => {   //app.delete ran by method override in HTML file. Logs user out and redirects to login page
-    req.logOut();
-    response.redirect('/login');
-});
-
-app.get('/', (request, response) => {
-    response.render('index.html');
-});
-*/
-
-
-
-/******************************************************************************************************************
-********************************************SUPPLEMENTAL FUNCTIONS*************************************************
-******************************************************************************************************************/
-
-function checkAuthenticated(req, response, next) {
-    if(req.isAuthenticated()) {
-        return next();
-    }
-
-    response.redirect('/login');
-}
-
-function checkNotAuthenticated(req, response, next) {
-    if(req.isAuthenticated()) {
-        return response.redirect('/instructor_main');
-    }
-
-    next();
-}
 
 // Run the webserver on specified port in .env file.
 app.listen(process.env.PORT, () => console.log(`app is running on port ${process.env.PORT}`));
