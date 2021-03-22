@@ -17,19 +17,20 @@ const initializePassport = require('./passport-config');
 initializePassport(
     passport, 
     username => users.find(user => user.username === username), //serialize user (save user instance)
-    username => users.find(user => user.username === username) //deserialize user
+    username => users.find(user => user.username === username)  //deserialize user
 );
 
 // Express setup
 const app = express();
 const { response, request } = require('express');
 
-dotenv.config();                            // Allows us to access our environment config when we need to.        
-const dbService = require('./dbService');   // Imports dbservice class we exported so we can use it.
+dotenv.config();                                        // Allows us to access our environment config when we need to.        
+const dbService = require('./dbService');               // Imports dbservice class we exported so we can use it.
 
 app.use(cors());                                        // When we have incoming API call, won't block and we can send to backend.       
 app.use(express.json());                                // Send API call in json format.      
 app.use(express.urlencoded({ extended : false }));      // Tell app we want to use data we send from front-end.
+
 app.use(flash());                                       // Flash is for using pop-ups inside our webpage if there is an error or user is not registered/authenticated correctly
 app.use(session({                                       // Stores and persists logged in user across webpages
     secret: process.env.SESSION_SECRET,                 
@@ -93,7 +94,7 @@ app.get('/getKeys', (req, response) => {
 // delete 
 
 
-// Stores our users
+// Stores our userss
 const users = [];
 
 
