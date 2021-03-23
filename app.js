@@ -50,22 +50,6 @@ app.set('views', __dirname + '/views');                 // Set view's folder to 
 app.set('view engine', 'html');                         // Set view engine to HTML instead of EJS
 
 
-// create
-app.post('/insert', (request, response) => {
-    console.log(request.body);
-});
-
-app.post('/insertAvailability', (request, response) => {
-    const {day, start_time, end_time} = request.body;
-    const db = dbService.getDbServiceInstance();
-    const result = db.insertAvailabilityData(day, start_time, end_time);
-
-    result
-    .then(data => response.json({success : data}))
-    .catch(err => console.log(err));
-    
-});
-
 
 // Bishesh's Function
 app.patch('/updateKey', (request, response) => {
@@ -153,6 +137,7 @@ app.use("/", index);
 app.use("/logout", logout );
 app.use("/update_key", update_key)
 app.use("/office_hours", office_hours);
+
 
 
 // Run the webserver on specified port in .env file.
