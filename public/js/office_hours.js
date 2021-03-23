@@ -1,8 +1,32 @@
+getAvailability();
 
-document.addEventListener('DOMContentLoaded', function(){
- 
-});
 
+var button_insert = document.getElementById("insert");
+var button_update = document.getElementById("update");
+var button_delete = document.getElementById("delete");
+
+button_insert.addEventListener("click", insert_availability);
+
+function insert_availability(){
+    var day = (document.getElementById("day")).value;
+    var start_time = (document.getElementById("start_time")).value;
+    var end_time = (document.getElementById("end_time")).value;
+    
+
+    fetch('http://localhost:5000/insertAvailability', {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify({ day : day, start_time : start_time, end_time : end_time})
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.success){
+            location.reload();
+        }
+    });
+}
 
 function loadHTMLTable(data) {
     
@@ -27,19 +51,12 @@ function loadHTMLTable(data) {
 }
 
 
-getAvailability();
+
 
 function getAvailability(){
     fetch('http://localhost:5000/getAvailability')
     .then(response => response.json())
-    .then(data => { loadHTMLTable(data['data']); 
-        /*
-        var temp = data['data'];
-        for(var i = 0; i < temp.length; i++)
-        {
-            console.log(numToDay(temp[i].day));
-        }    
-        */   
+    .then(data => { loadHTMLTable(data['data']);
     });
 }
 

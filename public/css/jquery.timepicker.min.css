@@ -54,8 +54,7 @@
 }
 
 .ui-timepicker-standard .ui-state-hover{
-    background-color:#DADADA;
-    border:1px solid #999;
+    background-color: #1E90FF;
     font-weight:400;
     color:#212121
 }
