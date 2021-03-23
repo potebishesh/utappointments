@@ -15,6 +15,7 @@ PASSWORD=test123
 DATABASE=utappointment
 DB_PORT=3306
 HOST=localhost
+SESSION_SECRET=secret
 */
 const connection = mysql.createConnection({
     host: process.env.HOST,
