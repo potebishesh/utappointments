@@ -66,6 +66,27 @@ class DbService {
         }
     }
 
+    async insertNewName(name) {
+        try {
+            const dateAdded = new Date();
+            const insertId = await new Promise((resolve, reject) => {
+                const query = "INSERT INTO names (name, date_added) VALUES (?,?);";
+
+                connection.query(query, [name, dateAdded] , (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.insertId);
+                })
+            });
+            return {
+                id : insertId,
+                name : name,
+                dateAdded : dateAdded
+            };
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     // Using a async to get our appointment keys
     async getKeysData() {
         try {
@@ -91,30 +112,30 @@ class DbService {
         }
     }
 
-        // Using async to get our office hours availability
-        async getAvailabilityData() {
-            try {
-                // Creating a new promise in which will handle our query.
-                // We will either resolve or reject the query.
-                // If rejected, will go into catch block.
-                const response = await new Promise((resolve, reject) => {
-                    // The query statement.
-                    const query = "SELECT * FROM availability";
-                    // To parameterize data selection:
-                    // const query = "SELECT * FROM appointments WHERE id = ?";
-    
-                    connection.query(query, (error, results) => {
-                        if (error) reject(new Error(error.message));
-                        resolve(results);
-                    });
-                    // To parameterize data selection:
-                    // connect.query(query, [id]);
+    // Using async to get our office hours availability
+    async getAvailabilityData() {
+        try {
+            // Creating a new promise in which will handle our query.
+            // We will either resolve or reject the query.
+            // If rejected, will go into catch block.
+            const response = await new Promise((resolve, reject) => {
+                // The query statement.
+                const query = "SELECT * FROM availability";
+                // To parameterize data selection:
+                // const query = "SELECT * FROM appointments WHERE id = ?";
+
+                connection.query(query, (error, results) => {
+                    if (error) reject(new Error(error.message));
+                    resolve(results);
                 });
-                return response;
-            } catch (error) {
-                console.log(error);
-            }
+                // To parameterize data selection:
+                // connect.query(query, [id]);
+            });
+            return response;
+        } catch (error) {
+            console.log(error);
         }
+    }
 
 
     async updateKeyData(app_key) {
