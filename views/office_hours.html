@@ -17,6 +17,7 @@
      <h1>Office Hours</h1>
      <form action = "">
      <select name="day" id="day" class="drop_down">
+        <option value="-1">Select Day</option>
         <option value="0">Sunday</option>
         <option value="1">Monday</option>
         <option value="2">Tuesday</option>
@@ -27,8 +28,8 @@
       </select>
     <br>
     <br>
-     <input type="text" id="start_time">
-     <input type="text" id="end_time">
+     <input type="text" id="start_time" placeholder="Start Time">
+     <input type="text" id="end_time" placeholder="End Time">
      <script>
            $(document).ready(function(){
               $('#start_time').timepicker({
