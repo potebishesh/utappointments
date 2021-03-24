@@ -94,6 +94,17 @@ app.post('/insert', (request, response) => {
     console.log(request.body);
 });
 
+app.post('/insertAvailability', (request, response) => {
+    const {day, start_time, end_time} = request.body;
+    const db = dbService.getDbServiceInstance();
+    const result = db.insertAvailabilityData(day, start_time, end_time);
+
+    result
+    .then(data => response.json({success : data}))
+    .catch(err => console.log(err));
+});
+
+
 // read
 app.get('/getAll', (req, response) => {
     // Grab DbService object.

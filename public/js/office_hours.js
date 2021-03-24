@@ -8,10 +8,14 @@ var button_delete = document.getElementById("delete");
 button_insert.addEventListener("click", insert_availability);
 
 function insert_availability(){
+    
+
     var day = (document.getElementById("day")).value;
     var start_time = (document.getElementById("start_time")).value;
     var end_time = (document.getElementById("end_time")).value;
     
+    start_time = to24hour(start_time);
+    end_time = to24hour(end_time);
 
     fetch('http://localhost:5000/insertAvailability', {
         method: 'POST',
@@ -40,6 +44,8 @@ function loadHTMLTable(data) {
 
     data.forEach(function ({day, start_time, end_time}){
         day = numToDay(day);
+        start_time = to12hour(start_time);
+        end_time = to12hour(end_time);
         tableHTML += "<tr>";
         tableHTML += `<td>${day}</td>`;
         tableHTML += `<td>${start_time}</td>`;
@@ -49,9 +55,6 @@ function loadHTMLTable(data) {
 
     table.innerHTML = tableHTML;
 }
-
-
-
 
 function getAvailability(){
     fetch('http://localhost:5000/getAvailability')
@@ -85,5 +88,59 @@ function numToDay(number){
         break;
         default:
             return 'Invalid day';
+    }
+}
+
+// converts 24 hour time format to 12 hour
+function to12hour(time_){
+    var result = "";
+    var time_array = time_.split(':', 3);
+
+    if(parseInt(time_array[0]) >= 0){
+        var hour = parseInt(time_array[0]);
+        var ampm = "AM";
+
+        if (hour == 0){
+            hour = 12;
+        }
+        else{
+            if (hour >= 12){
+                ampm = "PM";   
+            }
+            if (hour > 12){
+                hour = hour - 12;
+            }
+        }
+        result = hour.toString() + ":" + time_array[1] + " " + ampm;
+        return result;
+    }
+    else{
+        console.log("Invalid Time Inputs");
+    }
+}
+
+// converts 12 hour time format to 24 hour
+function to24hour(time_){
+    var result = "";
+    var time_i = time_.split(' ');
+    var time_array = time_i[0].split(':')
+
+    if(parseInt(time_array[0])){
+        var hour = parseInt(time_array[0]);
+        if (time_i[1] == "PM"){
+            if(hour < 12){
+                hour = hour + 12;
+            }
+        }
+        else if (time_i[1] = "AM"){
+            if(hour == 12){
+                hour = 0;
+            }
+        }
+        result = hour.toString() + ":" + time_array[1] + ":00";
+        return result;
+    }
+    else{
+        console.log("Invalid Time Input");
     }
 }
