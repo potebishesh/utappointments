@@ -8,7 +8,6 @@ var button_delete = document.getElementById("delete");
 button_insert.addEventListener("click", insert_availability);
 
 function insert_availability(){
-    
 
     var day = (document.getElementById("day")).value;
     var start_time = (document.getElementById("start_time")).value;
