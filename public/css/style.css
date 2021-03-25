@@ -98,6 +98,18 @@ h1{
     margin-bottom: 10px;
 }
 
+.download{
+    width: 100%;
+    display: inline;
+    border: none;
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #ea5f24;
+    border-radius: 12px;
+    padding: 7px 15px;
+    margin-bottom: 10px;
+}
+
 .submit_button:hover{
     background-color: black;
 }
