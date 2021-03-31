@@ -171,7 +171,30 @@ class DbService {
                 // The query statement.
                 const query = "INSERT INTO availability VALUES (?, ?, ?);";
             
-                connection.query(query, [day, start_time, end_time], (err, result) => {
+                connection.query(query, [ start_time, end_time, day,], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);  
+                    console.log(result);  
+                });
+            });
+        
+            return true;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+    async insertAppointment(email, date, time) {
+        try {            
+            // Creating a new promise in which will handle our query.
+            // We will either resolve or reject the query.
+            // If rejected, will go into catch block.
+            const response = await new Promise((resolve, reject) => {
+                // The query statement.
+                const query = `INSERT INTO appointment (email, app_date, app_time) VALUES (?,?,?);`;
+            
+                connection.query(query, [email, date, time], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result);  
                     console.log(result);  
@@ -185,6 +208,8 @@ class DbService {
         }
     }
 }
+
+
 
 
 // Export our Dbservice class

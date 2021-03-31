@@ -104,6 +104,18 @@ app.post('/insertAvailability', (request, response) => {
     .catch(err => console.log(err));
 });
 
+app.post('/insertAppointment', (request, response) => {
+    const {email, date, time} = request.body;
+    console.log(email);
+    console.log(date);
+    console.log(time);
+    const db = dbService.getDbServiceInstance();
+    const result = db.insertAppointment(email, date, time);
+
+    result
+    .then(data => response.json({success : data}))
+    .catch(err => console.log(err));
+});
 
 // read
 app.get('/getAll', (req, response) => {

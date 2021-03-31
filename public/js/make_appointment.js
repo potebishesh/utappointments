@@ -42,18 +42,16 @@ function bookAppointment() {
 
     var apt = new Appointment(date.value, new Student(`${fname.value} ${lname.value}`, email.value, 2021), 15);
 
-    // *** Send data to server for inserting to database
-    /*
+    // Send data to server for inserting to database
     fetch('http://localhost:5000/insertAppointment',{
         headers: {
             'Content-type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify({fname : fname.value, lname: lname.value, email: email.value, key: key.value, date: date.value, time: time.value})
+        body: JSON.stringify({email: email, date: date, time: time})
     })
     .then(response => response.json())
-    */
-    // ***  
+
     alert(`Appointment booked for ${apt.getStudent.getName} on ${apt.getDate} for ${apt.timeLength} minutes.`);
 }
 
