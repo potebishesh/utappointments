@@ -1,17 +1,49 @@
 getAvailability();
 
-
 var button_insert = document.getElementById("insert");
-var button_update = document.getElementById("update");
 var button_delete = document.getElementById("delete");
 
 button_insert.addEventListener("click", insert_availability);
+button_delete.addEventListener("click", delete_availability);
+
+function delete_availability(){
+    var day = (document.getElementById("day")).value;
+
+    if(day == -1){
+        return alert("Please select a valid day");
+    }
+
+    fetch('http://localhost:5000/deleteOfficeHours/' + day, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        }
+    });
+
+}
+
 
 function insert_availability(){
 
     var day = (document.getElementById("day")).value;
     var start_time = (document.getElementById("start_time")).value;
     var end_time = (document.getElementById("end_time")).value;
+
+    if(day == -1){
+        return alert("Please select a valid day");
+    }
+    
+    if(start_time.length == 0){
+        return alert("Select valid start time");
+    }
+
+    if(end_time.length == 0){
+        return alert("Select valid end time");
+    }
+
     
     start_time = to24hour(start_time);
     end_time = to24hour(end_time);

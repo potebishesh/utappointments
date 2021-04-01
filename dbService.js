@@ -171,7 +171,7 @@ class DbService {
                 // The query statement.
                 const query = "INSERT INTO availability VALUES (?, ?, ?);";
             
-                connection.query(query, [ start_time, end_time, day,], (err, result) => {
+                connection.query(query, [ day, start_time, end_time], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result);  
                     console.log(result);  
@@ -207,6 +207,27 @@ class DbService {
             return false;
         }
     }
+
+    async deleteOfficeHoursByDay(day) {
+        try {
+            day = parseInt(day, 10); 
+            const response = await new Promise((resolve, reject) => {
+                const query = "DELETE FROM availability WHERE day = ?";
+    
+                connection.query(query, [day] , (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                })
+            });
+            
+            return response === 1 ? true : false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+
 }
 
 

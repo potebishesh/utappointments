@@ -133,6 +133,16 @@ app.get('/getAll', (req, response) => {
 
 
 // delete 
+app.delete('/deleteOfficeHours/:day', (request, response) => {
+    const { day } = request.params;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.deleteOfficeHoursByDay(day);
+    
+    result
+    .then(data => response.json({success : data}))
+    .catch(err => console.log(err));
+});
 
 
 

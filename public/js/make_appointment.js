@@ -57,6 +57,7 @@ function bookAppointment() {
 
 
 // Disable some dates ****************
+/*
 document.getElementById('date').onchange = function(e){
     var tempDate = new Date(e.target.value);
 
@@ -77,7 +78,27 @@ document.getElementById('date').onchange = function(e){
         e.target.value = '';
     }
 };
-// 
+
+*/
+
+// Using jquery datepicker to enable only 2 weeks of date
+$(document).ready(function() {
+    let today = new Date();
+    let minDate = new Date();
+    minDate.setDate(today.getDate() + 2)
+    let maxDate = new Date();
+    maxDate.setDate(today.getDate() + 15);
+    
+	$('#datepicker').datepicker({
+		minDate: minDate,
+		maxDate: maxDate,
+		dateFormat: 'mm-dd-yy',
+		constrainInput: true
+	});
+});
+
+
+//****************************** */ 
 
 // Checks if key matches
 function checkKeys(){
