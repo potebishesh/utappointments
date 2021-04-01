@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
    <head>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="../css/style.css">
+      <link rel="stylesheet" href="../css/popup.css">
 
       <link href = "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel = "stylesheet">
       
@@ -17,6 +18,8 @@
          <img src="../../images/home-logo.png" alt="home" width="30" height="25">
      </a>
       <h1>Book Appointment</h1>
+
+     
       <div class="buttons">
       <form action="" onsubmit = "return false">
 
@@ -35,8 +38,30 @@
          <input type="submit" id="submit" value="Book Appointment" class="submit_button">
         
       </form>
-      </div>    
-     
+  
+ 
+      </div>   
+      <br> 
+      <a class="trigger_popup_fricc">Click here check current office hours</a>
+
+      <div class="hover_bkgr_fricc">
+         <span class="helper"></span>
+         <div>
+            <div class="popupCloseButton">&times;</div>
+            <p>Office Hours
+               <table id="table" class="content-table">
+                  <thead>
+                      <th>Day</th>
+                      <th>Start Time</th>
+                      <th>End Time</th>
+                  </thead>
+                  <tbody></tbody>
+              </table>
+
+            </p>
+         </div>
+      </div>
+
    </body>	
    <script type="module" src="js\make_appointment.js"> </script>
 </html>

@@ -1,7 +1,11 @@
 import Student from "./Student.js";
 import Appointment from "./Appointment.js";
+import {numToDay} from './utilities.js'
+import {to12hour} from './utilities.js'
 //const { response } = require("express");
 
+
+getAvailability();
 
 //initiate all data on form
 
@@ -98,7 +102,54 @@ $(document).ready(function() {
 });
 
 
-//****************************** */ 
+//**************************************************
+
+// Pop up for office hours
+$(window).load(function () {
+    $(".trigger_popup_fricc").click(function(){
+       $('.hover_bkgr_fricc').show();
+    });
+    $('.hover_bkgr_fricc').click(function(){
+        $('.hover_bkgr_fricc').hide();
+    });
+    $('.popupCloseButton').click(function(){
+        $('.hover_bkgr_fricc').hide();
+    });
+});
+
+function getAvailability(){
+    fetch('http://localhost:5000/getAvailability')
+    .then(response => response.json())
+    .then(data => { loadHTMLTable(data['data']);
+    });
+}
+
+
+function loadHTMLTable(data) {
+    
+    const table = document.querySelector('table tbody');
+    if(data.length === 0) {
+        table.innerHTML = "<tr><td class='no-data' colspan='3'> No office hours </td></tr>";
+        return;
+    }
+    
+    let tableHTML = "";
+
+    data.forEach(function ({day, start_time, end_time}){
+        day = numToDay(day);
+        start_time = to12hour(start_time);
+        end_time = to12hour(end_time);
+        tableHTML += "<tr>";
+        tableHTML += `<td>${day}</td>`;
+        tableHTML += `<td>${start_time}</td>`;
+        tableHTML += `<td>${end_time}</td>`;
+        tableHTML += "</tr>";
+    });
+
+    table.innerHTML = tableHTML;
+}
+
+// **************************************************
 
 // Checks if key matches
 function checkKeys(){
