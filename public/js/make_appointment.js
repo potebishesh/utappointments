@@ -11,16 +11,40 @@ getAvailability();
 
 var button = document.getElementById("submit");
 
+var fname = document.getElementById("fname");
+var lname = document.getElementById("lname");
+var email = document.getElementById("email");
+var date = document.getElementById("datepicker");
+var time = document.getElementById("time");
+
+
+
+// Ensure date is selected before time
+time.addEventListener("focus", function()
+{
+    if(!date.value){
+        alert('Please select date before time.');
+        date.focus();
+        time.value = ' ';
+    }
+    
+    jQueryTime('#time').timepicker({
+        minTime: '8:00am',
+        maxTime: '11:30pm',
+        interval:'10'
+    }); 
+
+}
+);
+
+date.addEventListener("focus", function(){
+    time.value = ' ';
+});
+// ***************************************
+
+
 button.addEventListener("click", checkKeys);
-
 function bookAppointment() {
-
-    var fname = document.getElementById("fname");
-    var lname = document.getElementById("lname");
-    var email = document.getElementById("email");
-    var date = document.getElementById("date");
-    var time = document.getElementById("time");
-
 
     if(!fname.value) {
         return alert("Please enter your first name!");
@@ -86,14 +110,15 @@ document.getElementById('date').onchange = function(e){
 */
 
 // Using jquery datepicker to enable only 2 weeks of date
-$(document).ready(function() {
+
+jQuery(document).ready(function() {
     let today = new Date();
     let minDate = new Date();
     minDate.setDate(today.getDate() + 2)
     let maxDate = new Date();
     maxDate.setDate(today.getDate() + 15);
     
-	$('#datepicker').datepicker({
+	jQuery('#datepicker').datepicker({
 		minDate: minDate,
 		maxDate: maxDate,
 		dateFormat: 'mm-dd-yy',
@@ -101,21 +126,23 @@ $(document).ready(function() {
 	});
 });
 
-
 //**************************************************
 
 // Pop up for office hours
-$(window).load(function () {
-    $(".trigger_popup_fricc").click(function(){
-       $('.hover_bkgr_fricc').show();
+
+jQuery(window).load(function () {
+    jQuery(".trigger_popup_fricc").click(function(){
+       jQuery('.hover_bkgr_fricc').show();
     });
-    $('.hover_bkgr_fricc').click(function(){
-        $('.hover_bkgr_fricc').hide();
+    jQuery('.hover_bkgr_fricc').click(function(){
+        jQuery('.hover_bkgr_fricc').hide();
     });
-    $('.popupCloseButton').click(function(){
-        $('.hover_bkgr_fricc').hide();
+    jQuery('.popupCloseButton').click(function(){
+        jQuery('.hover_bkgr_fricc').hide();
     });
 });
+
+//**************************************************
 
 function getAvailability(){
     fetch('http://localhost:5000/getAvailability')
@@ -123,7 +150,6 @@ function getAvailability(){
     .then(data => { loadHTMLTable(data['data']);
     });
 }
-
 
 function loadHTMLTable(data) {
     
