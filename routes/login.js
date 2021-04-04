@@ -15,11 +15,4 @@ function checkNotAuthenticated(req, response, next) {
     next();
 }
 
-router.post('/', checkNotAuthenticated, passport.authenticate('local', {  //checkNotAuthenticated for if user is already logged in, don't re-log in
-    successRedirect: '/instructor_main',
-    failureRedirect: '/login',
-    failureFlash: true
-}));
-
-
 module.exports = router;

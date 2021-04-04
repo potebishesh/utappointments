@@ -1,9 +1,9 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require("bcrypt");
 
-function initialize(passport, getUserByUsername, getUserByUsername) {
+function initialize(passport, getUserByUsername) {
     const authenticateUser = async (username, password, done) => {
-        const user = getUserByUsername(username);                                   //lookup user by username
+        const user = getUserByUsername(username);
         if (user == null) {
             return done(null, false, { message: "No user with that username" });    //return if user not found
         }

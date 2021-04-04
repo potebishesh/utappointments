@@ -13,16 +13,6 @@ const flash = require('express-flash');
 const session = require("express-session");
 const methodOverride = require('method-override');
 
-const initializePassport = require('./passport-config');
-initializePassport(
-    passport, 
-    username => users.find(user => user.username === username), //serialize user (save user instance)
-    username => users.find(user => user.username === username)  //deserialize user
-);
-
-// Stores our userss
-const users = [];
-
 // Express setup
 const app = express();
 const { response, request } = require('express');
@@ -49,7 +39,36 @@ app.engine('html', require('ejs').renderFile);          // Render HTML with ejs
 app.set('views', __dirname + '/views');                 // Set view's folder to right path
 app.set('view engine', 'html');                         // Set view engine to HTML instead of EJS
 
+const initializePassport = require('./passport-config');
 
+
+const users = [];  // stores our instructors information
+initializeInstructor();
+
+// initializeInstructor gets information about all the instructor from the
+// database and stores it in user array;
+function initializeInstructor(){
+    const db = dbService.getDbServiceInstance();
+    const result = db.getInstructorData();
+
+    result
+    .then(data => {
+        for (i = 0; i < data.length; i++){
+            users.push({
+                fname: data[i].in_fname,
+                lname: data[i].in_lname,
+                email: data[i].in_fname,
+                username: data[i].in_uname,
+                password: data[i].in_pwd
+            });
+        }
+        initializePassport(
+            passport, 
+            username => users.find(user => user.username === username)
+        );
+    })
+    .catch(err => console.log(err));
+}
 
 // Bishesh's Function
 app.patch('/updateKey', (request, response) => {
@@ -88,7 +107,6 @@ app.get('/getAvailability', (req, response) => {
 });
 
 
-
 // create
 app.post('/insert', (request, response) => {
     console.log(request.body);
@@ -117,6 +135,31 @@ app.post('/insertAppointment', (request, response) => {
     .catch(err => console.log(err));
 });
 
+
+app.post('/register', checkNotAuthenticated, async (req, response) => {  //checkNotAuthenticated for if user is already logged in, don't run register POST
+    try {                                                           //Try to hash password, if it fails then redirect back to register page
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        
+        const {fname, lname, email, username} = req.body;
+          
+        const db = dbService.getDbServiceInstance();
+        const result = db.register(fname, lname, email, username, hashedPassword);
+        initializeInstructor();    
+        response.redirect('/login');
+    } catch {
+        response.redirect('/register');
+    }
+    console.log(users);
+});
+
+
+app.post('/login', checkNotAuthenticated, passport.authenticate('local', {  //checkNotAuthenticated for if user is already logged in, don't re-log in
+    successRedirect: '/instructor_main',
+    failureRedirect: '/login',
+    failureFlash: true
+}));
+
+
 // read
 app.get('/getAll', (req, response) => {
     // Grab DbService object.
@@ -143,6 +186,16 @@ app.delete('/deleteOfficeHours/:day', (request, response) => {
     .then(data => response.json({success : data}))
     .catch(err => console.log(err));
 });
+
+
+function checkNotAuthenticated(req, response, next) {
+    if(req.isAuthenticated()) {
+        return response.redirect('/instructor_main');
+    }
+
+    next();
+}
+
 
 
 
