@@ -53,3 +53,41 @@ export function to12hour(time_){
         console.log("Invalid Time Inputs");
     }
 }
+
+export function to24hour(time_){
+    var result = "";
+    var time_i = time_.split(' ');
+    var time_array = time_i[0].split(':')
+
+    if(parseInt(time_array[0])){
+        var hour = parseInt(time_array[0]);
+        if (time_i[1] == "PM"){
+            if(hour < 12){
+                hour = hour + 12;
+            }
+        }
+        else if (time_i[1] = "AM"){
+            if(hour == 12){
+                hour = 0;
+            }
+        }
+        result = hour.toString() + ":" + time_array[1] + ":00";
+        return result;
+    }
+    else{
+        console.log("Invalid Time Input");
+    }
+}
+
+// changes date format from MM-DD-YYYY to YYYY-MM-DD
+export function dateYY(date){
+    var date_ = date.split('-');
+
+    var month = date_[0];
+    var day = date_[1];
+    var year = date_[2];
+
+    var result = year + '-' + month + '-' + day;
+
+    return result;
+}

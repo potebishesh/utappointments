@@ -210,16 +210,17 @@ class DbService {
         }
     }
 
-    async insertAppointment(email, date, time) {
+    async insertAppointment(st_fname, st_lname, st_email, app_date, app_time) {
         try {            
             // Creating a new promise in which will handle our query.
             // We will either resolve or reject the query.
             // If rejected, will go into catch block.
+            //********************** need to reformat the date to be inserted in the database
             const response = await new Promise((resolve, reject) => {
                 // The query statement.
-                const query = `INSERT INTO appointment (email, app_date, app_time) VALUES (?,?,?);`;
+                const query = `INSERT INTO appointment (st_fname, st_lname, st_email, app_date, app_time, app_timestamp) VALUES (?,?,?,?,?,NOW());`;
             
-                connection.query(query, [email, date, time], (err, result) => {
+                connection.query(query, [st_fname, st_lname, st_email, app_date, app_time], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result);  
                     console.log(result);  

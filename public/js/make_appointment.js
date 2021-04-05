@@ -2,6 +2,8 @@ import Student from "./Student.js";
 import Appointment from "./Appointment.js";
 import {numToDay} from './utilities.js'
 import {to12hour} from './utilities.js'
+import {to24hour} from './utilities.js'
+import {dateYY} from './utilities.js'
 //const { response } = require("express");
 
 
@@ -9,6 +11,7 @@ getAvailability();
 
 //initiate all data on form
 
+var form = document.getElementById("myform");
 var button = document.getElementById("submit");
 
 var fname = document.getElementById("fname");
@@ -16,8 +19,6 @@ var lname = document.getElementById("lname");
 var email = document.getElementById("email");
 var date = document.getElementById("datepicker");
 var time = document.getElementById("time");
-
-
 
 // Ensure date is selected before time
 time.addEventListener("focus", function()
@@ -44,43 +45,60 @@ date.addEventListener("focus", function(){
 
 
 button.addEventListener("click", checkKeys);
-function bookAppointment() {
 
-    if(!fname.value) {
+
+function bookAppointment() {
+    var fname_ = fname.value;
+    var lname_ = lname.value;
+    var email_ = email.value;
+    var date_ = date.value;
+    var time_ = time.value;
+
+    if(!fname_) {
         return alert("Please enter your first name!");
     }
     //else if(regex.test(fname.value)) {
       //  return alert("First name cannot have integer within it!")
     //}
-    else if(!lname.value) {
+    else if(!lname_) {
         return alert("Please enter your last name!");
     }
     //else if(regex.test(lname.value)) {
       //  return alert("Last name cannot have integer within it!")
     //}
-    else if(!email.value) {
+    else if(!email_) {
         return alert("Please enter your email address!");
     }
-    else if(!date.value) {
+    else if(!date_) {
         return alert("Please enter a date!");
     }
-    else if(!time.value) {
+    else if(!time_) {
         return alert("Please specify a time to book an appointment!");
     }
+    //var apt = new Appointment(date.value, new Student(`${fname.value} ${lname.value}`, email.value, 2021), 15);
 
-    var apt = new Appointment(date.value, new Student(`${fname.value} ${lname.value}`, email.value, 2021), 15);
+    var time__ = to24hour(time_);
+    var date__ = dateYY(date_);
+    var confirmation = confirm(`Are you sure you want to book appointment for ${fname_} ${lname_} on ${date_} at ${time_}?`);
+    // Send data to server for inserting appointment into the database
+    //
 
-    // Send data to server for inserting to database
-    fetch('http://localhost:5000/insertAppointment',{
-        headers: {
-            'Content-type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({email: email, date: date, time: time})
-    })
-    .then(response => response.json())
+    if (confirmation == true) {
+        fetch('http://localhost:5000/insertAppointment',{
+            headers: {
+                'Content-type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({st_fname: fname_, st_lname: lname_, st_email: email_, app_date: date__, app_time: time__})
+        })
+        .then(response => response.json())
+        .then(alert ('Appointment booked.'))
+        .then(form.reset())
+    } else {
+        alert('No appointment booked.');
+    }
 
-    alert(`Appointment booked for ${apt.getStudent.getName} on ${apt.getDate} for ${apt.timeLength} minutes.`);
+    //alert(`Appointment booked for ${apt.getStudent.getName} on ${apt.getDate} for ${apt.timeLength} minutes.`);
 }
 
 
@@ -195,6 +213,7 @@ function checkKeys(){
             }
         }
         if(keyBool == true){
+            
             bookAppointment();
         }
         else{

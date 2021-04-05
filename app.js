@@ -123,16 +123,20 @@ app.post('/insertAvailability', (request, response) => {
 });
 
 app.post('/insertAppointment', (request, response) => {
-    const {email, date, time} = request.body;
-    console.log(email);
-    console.log(date);
-    console.log(time);
+    const {st_fname, st_lname, st_email, app_date, app_time} = request.body;
+    console.log(st_fname);
+    console.log(st_lname);
+    console.log(st_email);
+    console.log(app_date);
+    console.log(app_time);
+    
     const db = dbService.getDbServiceInstance();
-    const result = db.insertAppointment(email, date, time);
+    const result = db.insertAppointment(st_fname, st_lname, st_email, app_date, app_time);
 
     result
     .then(data => response.json({success : data}))
     .catch(err => console.log(err));
+    
 });
 
 
