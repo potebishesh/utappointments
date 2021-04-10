@@ -102,6 +102,14 @@ h1{
     margin-bottom: 10px;
 }
 
+
+.submit_button:disabled{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+  }
+  
+
 .download{
     width: 100%;
     display: inline;
@@ -114,7 +122,7 @@ h1{
     margin-bottom: 10px;
 }
 
-.submit_button:hover{
+.submit_button:hover:enabled{
     background-color: black;
 }
 
@@ -160,3 +168,16 @@ h1{
     border-bottom: 2px solid;
 }
 
+.disable{
+    display: none;
+}
+
+.error{
+    background-color: #BE4B49;
+    color: white;
+    padding: 2px;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-radius: 3px;
+    font-size: 15px;
+}

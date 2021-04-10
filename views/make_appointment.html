@@ -25,8 +25,13 @@
      </a>
       <h1>Book Appointment</h1>
 
-     
+      
       <div class="buttons">
+      <span id='displayError' class="error disable">
+      </span>
+      <br>
+      <br>
+      
       <form action="" onsubmit = "return false" id="myform">
 
          <label for="fname">First Name:</label>
@@ -35,17 +40,20 @@
          <input type="text" id="lname" name="lname" class="login_input">
          <label for="email">Email:</label>
          <input type="text" id="email" name="email" class="login_input">
+         
          <label for="key">Key:</label>
          <input type="text" id="key" name="key" class="login_input">  
          <label for="date">Date:</label>
          <input type="text" id="datepicker" name="date" class="login_input" >
-         <label for="time">Time:</label>
-         <input type="text" id="time" name="time" class="login_input">
+         <label for="time" id="time_label" class = "disable">Time:</label>
+         <input type="text" id="time" name="time" class="login_input disable">
          <input type="submit" id="submit" value="Book Appointment" class="submit_button">
-        
+
+         
       </form>
   
- 
+      
+     
       </div>   
       <br> 
       <a class="trigger_popup_fricc">Click here check current office hours</a>
