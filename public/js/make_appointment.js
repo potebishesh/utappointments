@@ -22,7 +22,55 @@ var disabled_dates = [];
 var availability = [];
 getAvailability();
 
-email.addEventListener("focusout", check_email(email.value));
+
+
+
+/*
+
+ var timeInput = timeInput = document.createElement('input');
+timeInput.setAttribute('type', 'text');
+timeInput.setAttribute('name', 'time');
+timeInput.setAttribute('class', 'login_input');
+timeInput.setAttribute('id', 'time');
+
+
+
+if(timeInput){
+    console.log('it is there');
+}
+else{
+    console.log('not there');
+}
+
+var container = document.getElementById('container');
+timeInput.style.display = "block";
+
+container.appendChild(timeInput);
+timeInput.value = "asdfasdf";
+
+timeInput.remove();
+
+console.log(timeInput.val)
+
+if(timeInput){
+    console.log(timeInput);
+}
+else{
+    console.log('not there');
+}
+*/
+time.addEventListener("focus", function(){
+    time.value = "";
+})
+email.addEventListener("focusout", function(){
+    check_email(email.value);
+})
+/*
+time.addEventListener("click", function(){
+    time.value = "";
+})
+*/
+
 button.addEventListener("click", checkKeys);
 
 function bookAppointment() {
@@ -122,6 +170,7 @@ function enable_date() {
 		dateFormat: 'mm-dd-yy',
 		constrainInput: true,    
 	}).on("change", function(){
+        time.value = "";
         enable_time(date.value);
     });
 
@@ -194,6 +243,7 @@ function loadHTMLTable(data) {
 
 // Checks if key matches
 function checkKeys(){
+    
     fetch('http://localhost:5000/getKeys')
     .then(response => response.json())
     .then(data => {
@@ -224,11 +274,23 @@ function checkKeys(){
 
 function enable_time(date){
     if(date){
+        var temp = new Date(date);
+        var day = temp.getDay();
+        for(var i = 0; i < availability.length; i++){
+            if(availability[i][0] == day){
+                break;
+            }
+        }
+        
+
         jQueryTime('#time').timepicker({
-            minTime: availability[0][1],
-            maxTime: availability[0][2],
-            interval:'10'
-        }); 
+            interval:'10',
+            scrollbar: 'true'
+        });
+
+        jQueryTime('#time').timepicker('option', 'minTime', availability[i][1]); 
+        jQueryTime('#time').timepicker('option', 'maxTime', availability[i][2]); 
+
         time.style.display = "block";
         time_label.style.display = "block";
     }
@@ -239,17 +301,19 @@ function enable_time(date){
 }
 
 
+
 function check_email(email_){
+
     var domain = email_.split('@');
-    if(domain.length == 2){
-        if(domain[1] != 'mavs.uta.edu'){
-            error.style.display = "block";
-            error.innerHTML = "Email should be mavs.uta.edu";
-            email.focus();
-        }
+    console.log(domain.length);
+   
+    if(domain.length == 2 && domain[1] == 'mavs.uta.edu'){
+        error.style.display = "none";
+        return 1;
     }
-    else if(domain.length >=3){
+    else{
         error.style.display = "block";
-        error.innerHTML = "Enter valid email";
+        error.innerHTML = "Email should be @mavs.uta.edu";
+        return 0;
     }
 }

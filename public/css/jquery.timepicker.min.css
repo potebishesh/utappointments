@@ -18,7 +18,6 @@
 .ui-timepicker{
     box-sizing:content-box;
     display:block;
-    height:205px;
     list-style:none outside none;
     margin:0;
     padding:0 1px;
@@ -28,7 +27,7 @@
 .ui-timepicker-viewport{
     box-sizing:content-box;
     display:block;
-    height:205px;
+    height:100px;
     margin:0;
     padding:0;
     overflow:auto;
