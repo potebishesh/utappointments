@@ -173,8 +173,7 @@ h1{
 }
 
 .error{
-    background-color: #BE4B49;
-    color: white;
+    color: red;
     padding: 2px;
     padding-left: 25px;
     padding-right: 25px;

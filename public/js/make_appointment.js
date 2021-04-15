@@ -22,7 +22,9 @@ var disabled_dates = [];
 var availability = [];
 getAvailability();
 
-
+var valid_fname = false;
+var valid_lname = false;
+var valid_email = false;
 
 
 /*
@@ -59,11 +61,28 @@ else{
     console.log('not there');
 }
 */
+fname.focus();
+
 time.addEventListener("focus", function(){
+    error.innerHTML = "";  
     time.value = "";
 })
 email.addEventListener("focusout", function(){
     check_email(email.value);
+})
+fname.addEventListener("focusout", function(){
+    check_fname(fname.value);
+})
+lname.addEventListener("focusout", function(){
+    check_lname(lname.value);
+})
+date.addEventListener("focusout", function(){
+    if(!date.value){
+        error.innerHTML = "Select Date";
+    }
+})
+key.addEventListener("focusout", function(){
+    error.innerHTML = "";
 })
 /*
 time.addEventListener("click", function(){
@@ -80,28 +99,27 @@ function bookAppointment() {
     var date_ = date.value;
     var time_ = time.value;
 
-    if(!fname_) {
-        return alert("Please enter your first name!");
+    if(!valid_fname) {
+        check_fname(fname.value);
+        return 0;
     }
-    //else if(regex.test(fname.value)) {
-      //  return alert("First name cannot have integer within it!")
-    //}
-    else if(!lname_) {
-        return alert("Please enter your last name!");
+    else if(!valid_lname) {
+        check_lname(lname.value);
+        return 0;
     }
-    //else if(regex.test(lname.value)) {
-      //  return alert("Last name cannot have integer within it!")
-    //}
-    else if(!email_) {
-        return alert("Please enter your email address!");
+    else if(!valid_email){
+        check_email(email.value);
+        return 0;
     }
-    else if(!date_) {
-        return alert("Please enter a date!");
+    else if(!date_){
+        error.innerHTML = "Select Date";
+        return 0;
     }
-    else if(!time_) {
-        return alert("Please specify a time to book an appointment!");
+    else if(!time_){
+        error.innerHTML = "Select Time";
+        return 0;
     }
-    //var apt = new Appointment(date.value, new Student(`${fname.value} ${lname.value}`, email.value, 2021), 15);
+    
 
     var time__ = to24hour(time_);
     var date__ = dateYY(date_);
@@ -172,6 +190,7 @@ function enable_date() {
 	}).on("change", function(){
         time.value = "";
         enable_time(date.value);
+        
     });
 
     function DisableDates(date) {
@@ -248,25 +267,23 @@ function checkKeys(){
     .then(response => response.json())
     .then(data => {
         var keyBool = new Boolean(false);
-        var key = document.getElementById("key");
-
         var temp = data['data'];
+        
+        var key = document.getElementById("key");
         for(var i = 0; i < temp.length; i++)
         {
             if(key.value == temp[i].app_key)
             {
                 keyBool = true;
-                console.log('Key matched in the database.');
             }
         }
-        if(keyBool == true){
-            
-            bookAppointment();
+        if(keyBool == false){
+            error.innerHTML = "Key does not match. Retry or contact instructor.";
         }
         else{
-            console.log('Key does not match in the database.');
-            return alert('Key does not match. Retry or contact instructor.');
-        }       
+            error.innerHTML = "";
+            bookAppointment();
+        }
     });
 }
 
@@ -274,6 +291,7 @@ function checkKeys(){
 
 function enable_time(date){
     if(date){
+        error.innerHTML = "";
         var temp = new Date(date);
         var day = temp.getDay();
         for(var i = 0; i < availability.length; i++){
@@ -305,15 +323,51 @@ function enable_time(date){
 function check_email(email_){
 
     var domain = email_.split('@');
-    console.log(domain.length);
-   
-    if(domain.length == 2 && domain[1] == 'mavs.uta.edu'){
-        error.style.display = "none";
-        return 1;
+
+    if(email_.length == 0){
+        error.innerHTML = "Do not leave email empty";
+        valid_email = false;
+    }
+    else if(domain.length == 2 && domain[0].length != 0 && domain[1] == 'mavs.uta.edu' ){
+        error.innerHTML = "";
+        valid_email = true;
     }
     else{
-        error.style.display = "block";
-        error.innerHTML = "Email should be @mavs.uta.edu";
-        return 0;
+        error.innerHTML = "Email should be your_email@mavs.uta.edu";
+        valid_email = false;
     }
 }
+
+function check_fname(text){
+    if(text.length == 0){
+        error.innerHTML = "Do not leave first name empty";
+        valid_fname = false;
+    }
+    else if(hasNumber(text)){
+        error.innerHTML = "Name cannot contain digits";
+        valid_fname = false;
+    }
+    else{
+        error.innerHTML = "";
+        valid_fname = true;
+    }
+}
+
+function check_lname(text){
+    if(text.length == 0){
+        error.innerHTML = "Do not leave last name empty";
+        valid_lname = false;
+    }
+    else if(hasNumber(text)){
+        error.innerHTML = "Name cannot contain digits";
+        valid_lname = false;
+    }
+    else{
+        error.innerHTML = "";
+        valid_lname = true;
+    }
+}
+
+function hasNumber(myString) {
+    return /\d/.test(myString);
+  }
