@@ -15,7 +15,6 @@ const methodOverride = require("method-override");
 
 // Express setup
 const app = express();
-const { response, request } = require("express");
 
 dotenv.config(); // Allows us to access our environment config when we need to.
 const dbService = require("./dbService"); // Imports dbservice class we exported so we can use it.
@@ -40,7 +39,6 @@ app.use(methodOverride("_method")); // Override POST method on HTML file to run 
 app.use(express.static("public")); // Tell express our static files are in public/
 app.engine("html", require("ejs").renderFile); // Render HTML with ejs
 app.set("views", __dirname + "/views"); // Set view's folder to right path
-app.set("view engine", "html"); // Set view engine to HTML instead of EJS
 
 const initializePassport = require("./passport-config");
 
@@ -55,7 +53,7 @@ function initializeInstructor() {
 
   result
     .then((data) => {
-      for (i = 0; i < data.length; i++) {
+      for (var i = 0; i < data.length; i++) {
         users.push({
           fname: data[i].in_fname,
           lname: data[i].in_lname,
@@ -81,6 +79,7 @@ app.patch("/updateKey", (request, response) => {
     .then((data) => response.json({ success: data }))
     .catch((err) => console.log(err));
 });
+
 
 // Obtain appointment keys from the database.
 app.get("/getKeys", (req, response) => {
