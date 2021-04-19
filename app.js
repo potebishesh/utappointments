@@ -143,23 +143,7 @@ app.post("/insertAppointment", (request, response) => {
     .catch((err) => console.log(err));
 });
 
-app.post("/register", checkNotAuthenticated, async (req, response) => {
-  //checkNotAuthenticated for if user is already logged in, don't run register POST
-  try {
-    //Try to hash password, if it fails then redirect back to register page
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-    const { fname, lname, email, username } = req.body;
-
-    const db = dbService.getDbServiceInstance();
-    const result = db.register(fname, lname, email, username, hashedPassword);
-    initializeInstructor();
-    response.redirect("/login");
-  } catch {
-    response.redirect("/register");
-  }
-  console.log(users);
-});
 
 app.post(
   "/login",
