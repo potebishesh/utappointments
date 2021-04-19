@@ -15,7 +15,7 @@ function initialize(passport, getUserByUsername) {
             else {
                 return done(null, false, { message: "Password incorrect." });       //if password is wrong, return false and a message
             }
-        } catch {
+        } catch (e) {
             return done(e)                                                          //if decryption fails, catch error
         }
 

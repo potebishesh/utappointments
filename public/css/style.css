@@ -17,7 +17,6 @@ h1{
 }
 
 .buttons{
-
     display: inline-block;
 }
 
@@ -51,8 +50,6 @@ h1{
     
     min-width: 250px;
 }
-
-
 
 .drop_down{
     font-size: 12px;
@@ -89,7 +86,6 @@ h1{
     min-width: 250px;
 }
 
-
 .submit_button{
     width: 100%;
     display: inline;
@@ -98,17 +94,14 @@ h1{
     text-decoration: none;
     background-color: #ea5f24;
     border-radius: 12px;
-    padding: 7px 15px;
-    margin-bottom: 10px;
+    padding: 7px;
 }
-
 
 .submit_button:disabled{
     border: 1px solid #999999;
     background-color: #cccccc;
     color: #666666;
-  }
-  
+}
 
 .download{
     width: 100%;
@@ -174,7 +167,7 @@ h1{
 
 .error{
     color: red;
-    padding: 2px;
+    padding: 10px;
     padding-left: 25px;
     padding-right: 25px;
     border-radius: 3px;

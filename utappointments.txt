@@ -1,13 +1,5 @@
 CREATE DATABASE utappointment;
 
-CREATE TABLE student
-(
-  	st_fname VARCHAR(20) NOT NULL,
-  	st_lname VARCHAR(20) NOT NULL,
- 	st_email VARCHAR(40) NOT NULL,
- 	PRIMARY KEY(st_email)
-);
-
 CREATE TABLE appointment
 (
     ref_num INT NOT NULL AUTO_INCREMENT,
@@ -15,8 +7,10 @@ CREATE TABLE appointment
     app_time TIME NOT NULL,
     email VARCHAR(40) NOT NULL,
     app_timestamp TIMESTAMP NOT NULL,
-    PRIMARY KEY(ref_num),
-    FOREIGN KEY(email) REFERENCES student(st_email)  
+    st_fname VARCHAR(20) NOT NULL,
+  	st_lname VARCHAR(20) NOT NULL,
+ 	st_email VARCHAR(40) NOT NULL,
+    PRIMARY KEY(ref_num)
 );
 
 CREATE TABLE instructor
@@ -35,6 +29,12 @@ CREATE TABLE app_keys
     PRIMARY KEY(app_key)
 );
 
+CREATE TABLE disabled_dates
+(
+    d_dates DATE NOT NULL,
+    PRIMARY KEY(d_dates)
+);
+
 CREATE TABLE availability
 (
 	# 0 represent sunday
@@ -43,5 +43,3 @@ CREATE TABLE availability
 	end_time TIME NOT NULL,
     PRIMARY KEY(day, start_time)
 );
-
-
