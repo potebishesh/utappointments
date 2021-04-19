@@ -53,7 +53,7 @@ function initializeInstructor() {
 
   result
     .then((data) => {
-      for (let i = 0; i < data.length; i++) {
+      for (var i = 0; i < data.length; i++) {
         users.push({
           fname: data[i].in_fname,
           lname: data[i].in_lname,
