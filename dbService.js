@@ -245,8 +245,8 @@ class DbService {
             
                 connection.query(query, [fname, lname, email, username, hashedPassword], (err, result) => {
                     if (err) reject(new Error(err.message));
-                    resolve(result);  
-                    console.log(result);  
+                    resolve('Success');  
+                    //console.log(result);  
                 });
             });
         
