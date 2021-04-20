@@ -7,6 +7,14 @@ router.get('/', checkNotAuthenticated, (req, response) => {           //checkNot
     response.render('instructor_login.ejs');
 });
 
+router.post("/", checkNotAuthenticated, passport.authenticate("local", {
+    //checkNotAuthenticated for if user is already logged in, don't re-log in
+    successRedirect: "/instructor_main",
+    failureRedirect: "/login",
+    failureFlash: true,
+  })
+);
+
 function checkNotAuthenticated(req, response, next) {
     if(req.isAuthenticated()) {
         return response.redirect('/instructor_main');

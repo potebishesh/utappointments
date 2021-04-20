@@ -128,7 +128,7 @@ function bookAppointment() {
     //
 
     if (confirmation == true) {
-        fetch('http://localhost:5000/insertAppointment',{
+        fetch('http://localhost:5000/appointment/insertAppointment',{
             headers: {
                 'Content-type': 'application/json'
             },
@@ -223,7 +223,7 @@ jQuery(window).load(function () {
 
 // API call to get office hours, after completion, load the pop up HTML
 function getAvailability(){
-    fetch('http://localhost:5000/getAvailability')
+    fetch('http://localhost:5000/appointment/getAvailability')
     .then(response => response.json())
     .then(data => { loadHTMLTable(data['data']);
     });
@@ -263,7 +263,7 @@ function loadHTMLTable(data) {
 // Checks if key matches
 function checkKeys(){
     
-    fetch('http://localhost:5000/getKeys')
+    fetch('http://localhost:5000/appointment/getKeys')
     .then(response => response.json())
     .then(data => {
         var keyBool = new Boolean(false);
@@ -370,4 +370,4 @@ function check_lname(text){
 
 function hasNumber(myString) {
     return /\d/.test(myString);
-  }
+}

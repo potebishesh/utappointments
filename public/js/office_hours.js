@@ -13,7 +13,7 @@ function delete_availability(){
         return alert("Please select a valid day");
     }
 
-    fetch('http://localhost:5000/deleteOfficeHours/' + day, {
+    fetch('http://localhost:5000/instructor_main/deleteOfficeHours/' + day, {
         method: 'DELETE'
     })
     .then(response => response.json())
@@ -22,9 +22,7 @@ function delete_availability(){
             location.reload();
         }
     });
-
 }
-
 
 function insert_availability(){
 
@@ -48,7 +46,7 @@ function insert_availability(){
     start_time = to24hour(start_time);
     end_time = to24hour(end_time);
 
-    fetch('http://localhost:5000/insertAvailability', {
+    fetch('http://localhost:5000/instructor_main/insertAvailability', {
         method: 'POST',
         headers: {
             'Content-type': 'application/json'
@@ -88,7 +86,7 @@ function loadHTMLTable(data) {
 }
 
 function getAvailability(){
-    fetch('http://localhost:5000/getAvailability')
+    fetch('http://localhost:5000/instructor_main/getAvailability')
     .then(response => response.json())
     .then(data => { loadHTMLTable(data['data']);
     });
