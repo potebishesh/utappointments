@@ -1,9 +1,8 @@
 "use strict";
 const express = require("express");
 let router = express.Router();
+const controller = require("../controllers/check_status")
 
-router.get('/', (req, response) => {
-    response.render('check_status.ejs');
-});
+router.get('/', controller.renderCheckStatusPage);
 
 module.exports = router;

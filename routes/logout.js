@@ -1,10 +1,9 @@
 "use strict";
 const express = require("express");
 let router = express.Router();
+const controller = require("../controllers/logout")
 
-router.delete('/', (req, response) => {   //app.delete ran by method override in HTML file. Logs user out and redirects to login page
-    req.logOut();
-    response.redirect('/login');
-});
+// Logout User
+router.delete('/', controller.logoutUser);
 
 module.exports = router;
