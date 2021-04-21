@@ -1,64 +1,66 @@
-<head>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../css/jquery.timepicker.min.css">
-      
-    <script src = "..\js\jquery.timepicker.min.js"></script>
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="../css/jquery.timepicker.min.css">
+        
+        <script src = "..\js\jquery.timepicker.min.js"></script>
 
-    <title>Office Hours</title>
-</head>	
-<body>
-    <a href="/instructor_main" class="header_logo"> 
-        <img src="../images/Back_Arrow.svg" alt="home" width="40" height="40">
-    </a>
-    <h1>Office Hours</h1>
-    <form action = "">
-    <!-- Avoid Chrome autofill -->
-    <input name="email" class="hide">
-    <select name="day" id="day" class="drop_down">
-    <option value="-1">Select Day</option>
-    <option value="0">Sunday</option>
-    <option value="1">Monday</option>
-    <option value="2">Tuesday</option>
-    <option value="3">Wednesday</option>
-    <option value="4">Thursday</option>
-    <option value="5">Friday</option>
-    <option value="6">Saturday</option>
-    </select>
-    <br>
-    <br>
-    <input type="text" id="start_time" placeholder="Start Time" autocomplete="off">
-    <input type="text" id="end_time" placeholder="End Time" autocomplete="off">
-    <script>
-        $(document).ready(function(){
-            $('#start_time').timepicker({
-                'minTime': '8:00am',
-                'maxTime': '11:30pm',
-                'interval':'10'
-            }); 
-            $('#end_time').timepicker({
-                'minTime': '8:00am',
-                'maxTime': '11:30pm',
-                'interval':'10'
-            }); 
-        });
-    </script>  
-    <br>
-    <br>
-    <input type="submit" value="Delete" id="delete" class="update_hours">
-    <br>
-    <input type="submit" value="Insert" id="insert" class="update_hours">
-    
-    </form>
+        <title>Office Hours</title>
+    </head>	
+    <body>
+        <a href="/instructor_main" class="header_logo"> 
+            <img src="../images/Back_Arrow.svg" alt="home" width="40" height="40">
+        </a>
+        <h1>Office Hours</h1>
+        <form action = "">
+        <!-- Avoid Chrome autofill -->
+        <input name="email" class="hide">
+        <select name="day" id="day" class="drop_down">
+        <option value="-1">Select Day</option>
+        <option value="0">Sunday</option>
+        <option value="1">Monday</option>
+        <option value="2">Tuesday</option>
+        <option value="3">Wednesday</option>
+        <option value="4">Thursday</option>
+        <option value="5">Friday</option>
+        <option value="6">Saturday</option>
+        </select>
+        <br>
+        <br>
+        <input type="text" id="start_time" placeholder="Start Time" autocomplete="off">
+        <input type="text" id="end_time" placeholder="End Time" autocomplete="off">
+        <script>
+            $(document).ready(function(){
+                $('#start_time').timepicker({
+                    'minTime': '8:00am',
+                    'maxTime': '11:30pm',
+                    'interval':'10'
+                }); 
+                $('#end_time').timepicker({
+                    'minTime': '8:00am',
+                    'maxTime': '11:30pm',
+                    'interval':'10'
+                }); 
+            });
+        </script>  
+        <br>
+        <br>
+        <input type="submit" value="Delete" id="delete" class="update_hours">
+        <br>
+        <input type="submit" value="Insert" id="insert" class="update_hours">
+        
+        </form>
 
-    <table id="table" class="content-table">
-        <thead>
-            <th>Day</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-        </thead>
-        <tbody></tbody>
-    </table>
-    <script type="module" src="js\office_hours.js"> </script>
-</body>
+        <table id="table" class="content-table">
+            <thead>
+                <th>Day</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <script type="module" src="..\js\office_hours.js"> </script>
+    </body>
+</html>

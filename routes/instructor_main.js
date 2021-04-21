@@ -1,6 +1,7 @@
 "use strict";
 const express = require("express");
 let router = express.Router();
+const dbService = require("../dbService");
 
 router.get('/', checkAuthenticated, (req, response) => { //checkAuthenticated for if user is not already logged in, cannot access instructor's main page
     response.render('instructor_main.ejs');

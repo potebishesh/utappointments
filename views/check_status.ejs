@@ -1,36 +1,38 @@
-<head>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
-      
-      <title>Check Appointment Status</title>
-</head>	
-<body>
-        <a href="/" class="header_logo"> 
-            <img src="../images/home-logo.png" alt="home" width="30" height="25">
-        </a>
-        <h1>Check Appointment Status</h1>
-        <div class="buttons">
-        <form action="">  
-            <label for="reference">Reference Number:</label><br>
-            <input type="text" id="reference" name="reference" class="login_input">
-            <label for="email">Email:</label><br>
-            <input type="text" id="email" name="email" class="login_input">
-            <input type="submit" value="Check Status" id="submit" class="submit_button">
-        </form>
-        </div>  
- 
-    <table id="table" class="content-table">
-    <thead>
-            <th>Reference Number</th>
-            
-            <th>First Name</th>
-            <th>Last Name</th>
-            
-            <th>Date</th>
-            <th>Time</th>
-        </thead>
-        <tbody></tbody>
-    </table>
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../css/style.css">
+        
+        <title>Check Appointment Status</title>
+    </head>	
+    <body>
+            <a href="/" class="header_logo"> 
+                <img src="../images/home-logo.png" alt="home" width="30" height="25">
+            </a>
+            <h1>Check Appointment Status</h1>
+            <div class="buttons">
+            <form action="">  
+                <label for="reference">Reference Number:</label><br>
+                <input type="text" id="reference" name="reference" class="login_input">
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email" class="login_input">
+                <input type="submit" value="Check Status" id="submit" class="submit_button">
+            </form>
+            </div>  
     
-   <script src="js/check_status.js"></script>
-</body>	
+        <table id="table" class="content-table">
+        <thead>
+                <th>Reference Number</th>
+                
+                <th>First Name</th>
+                <th>Last Name</th>
+                
+                <th>Date</th>
+                <th>Time</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+        
+    <script src="js/check_status.js"></script>
+    </body>
+</html>

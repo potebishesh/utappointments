@@ -1,34 +1,35 @@
-<head>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="../css/style.css" />
+<html>
+  <head>
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet"/>
+      <link rel="stylesheet" href="../css/style.css" />
 
-    <title>Instructor Main</title>
-</head>
-<body>
-    <a href="/" class="header_logo">
-      <img src="../images/home-logo.png" alt="home" width="30" height="25" />
-    </a>
-    <h1>Login</h1>
-    <div class="buttons">
-      <form action="/login" method="POST">
-        <label for="username">Username:</label><br />
-        <input type="text" id="username" name="username" class="login_input" />
-        <label for="password">Password:</label><br />
-        <input
-          type="password"
-          id="password"
-          name="password"
-          class="login_input"
-        />
-        <input type="submit" value="Log In" class="submit_button" />
-      </form>
-    </div>
-    <div class="error">
-        <% if (messages.error) { %>
-            <%= messages.error %>
-        <% } %>
-    </div>
-    <a href="/forgot_password" class="links"> Forgot my password </a>
-    <a href="/register" class="links">Register New Instructor</a>
-</body>
-
+      <title>Instructor Main</title>
+  </head>
+  <body>
+      <a href="/" class="header_logo">
+        <img src="../images/home-logo.png" alt="home" width="30" height="25" />
+      </a>
+      <h1>Login</h1>
+      <div class="buttons">
+        <form action="/login" method="POST">
+          <label for="username">Username:</label><br />
+          <input type="text" id="username" name="username" class="login_input" />
+          <label for="password">Password:</label><br />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="login_input"
+          />
+          <input type="submit" value="Log In" class="submit_button" />
+        </form>
+      </div>
+      <div class="error">
+          <% if (messages.error) { %>
+              <%= messages.error %>
+          <% } %>
+      </div>
+      <a href="/forgot_password" class="links"> Forgot my password </a>
+      <a href="/register" class="links">Register New Instructor</a>
+  </body>
+</html>
