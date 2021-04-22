@@ -1,23 +1,17 @@
 "use strict";
 const express = require("express");
 let router = express.Router();
-const passport = require("passport");
+const controller = require("../controllers/login");
 
-router.get('/', checkNotAuthenticated, (req, response) => {           //checkNotAuthenticated for if user is already logged in, don't go back to login page
-    response.render('instructor_login.ejs');
-});
+// Page rendering.
+router.get("/", checkNotAuthenticated, controller.renderLoginPage);
 
-router.post("/", checkNotAuthenticated, passport.authenticate("local", {
-    //checkNotAuthenticated for if user is already logged in, don't re-log in
-    successRedirect: "/instructor_main",
-    failureRedirect: "/login",
-    failureFlash: true,
-  })
-);
+// Login page functions.
+router.post("/", checkNotAuthenticated, controller.authenticateUser);
 
 function checkNotAuthenticated(req, response, next) {
     if(req.isAuthenticated()) {
-        return response.redirect('/instructor_main');
+        return response.redirect("/instructor_main");
     }
 
     next();

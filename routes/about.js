@@ -1,9 +1,9 @@
 "use strict";
 const express = require("express");
 let router = express.Router();
+const controller = require("../controllers/about")
 
-router.get('/', (req, response) => {
-    response.render('about.ejs');
-});
+// Render page.
+router.get('/', controller.renderAboutPage);
 
 module.exports = router;
