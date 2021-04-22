@@ -5,6 +5,7 @@ const controller = require('../controllers/instructor_main')
 
 // Page rendering.
 router.get('/', checkAuthenticated, controller.renderInstructorPage);
+router.get("/schedule", checkAuthenticated, controller.renderSchedulePage);
 router.get('/office_hours', checkAuthenticated, controller.renderOfficeHoursPage);
 router.get('/update_key', checkAuthenticated, controller.renderUpdateKeyPage);
 
@@ -12,6 +13,9 @@ router.get('/update_key', checkAuthenticated, controller.renderUpdateKeyPage);
 router.delete("/deleteOfficeHours/:day", controller.deleteAvailability);
 router.post("/insertAvailability", controller.insertAvailability);
 router.get("/getAvailability", controller.getAvailability);
+
+// Schedule page functions.
+router.get("/getAppointments", controller.getAppointments);
 
 // Update key page functions.
 router.patch("/updateKey", controller.updateKey);
