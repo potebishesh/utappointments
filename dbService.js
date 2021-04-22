@@ -132,10 +132,26 @@ class DbService {
             // connect.query(query, [id]);
         });
         return response;
-    } catch (error) {
-        console.log(error);
+        } catch (error) {
+            console.log(error);
+        }
     }
-}
+
+    async getAppointmentData() {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM appointment";
+                connection.query(query, (error, results) => {
+                    if (error) reject(new Error(error.message));
+                    resolve(results);
+                });
+            });
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     // Using async to get our office hours availability
     async getAvailabilityData() {
         try {
