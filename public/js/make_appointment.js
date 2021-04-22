@@ -17,7 +17,8 @@ var date = document.getElementById("datepicker");
 var time = document.getElementById("time");
 var time_label = document.getElementById("time_label");
 var error = document.getElementById("displayError");
-var message = document.getElementById("displayMessage");
+var messageBox = document.getElementById("displayMessage");
+var message = document.getElementById("appointmentMessage")
 var disabled_dates = [];
 var availability = [];
 getAvailability();
@@ -165,13 +166,16 @@ function test(data) {
         document.getElementById('hide').style.display = 'none';
         var message_ = data['data'];
         message_ = message_[0];
-        var message_text = "Appointment booked for " + message_['st_fname'] + " " + message_['st_lname'] + 
-                                                "\nReference Number is " + message_['ref_num'];
+        let date = new Date(message_['app_date']).toLocaleString();
+        var temp = date.split(',');
+        date = temp[0];
+        var message_text = "Appointment booked for " + message_['st_fname'] + " " + message_['st_lname'] +
+                                               " on " + date +  " at " + to12hour(message_['app_time']) + 
+                                               ". Reference Number is " + message_['ref_num'];
 
         message.innerHTML = message_text;
 
-        message.style.display = 'block';
-        console.log(data['data']);
+        messageBox.style.display = 'block';
     });
 
 }
