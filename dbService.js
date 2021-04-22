@@ -140,7 +140,7 @@ class DbService {
     async getAppointmentData() {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM appointment";
+                const query = "SELECT * FROM appointment ORDER BY app_date DESC, app_time DESC";
                 connection.query(query, (error, results) => {
                     if (error) reject(new Error(error.message));
                     resolve(results);
