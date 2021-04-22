@@ -2,6 +2,7 @@
 
 const mysql = require('mysql');
 const dotenv = require('dotenv');
+const { response } = require('express');
 let instance = null;
 dotenv.config();
 
@@ -113,25 +114,41 @@ class DbService {
         }
     }
    // Using a async to get our appointment info
-   async getAppointmentInfo(st_fname, st_lname, st_email, app_date, app_time) {
-    try {
-        // Creating a new promise in which will handle our query.
-        // We will either resolve or reject the query.
-        // If rejected, will go into catch block.
-        const response = await new Promise((resolve, reject) => {
-            // The query statement. 
-            const query = "SELECT * FROM appointment WHERE st_fname = ? AND st_lname = ? AND st_email = ? AND app_date = ? AND app_time = ? ORDER BY ref_num DESC";
-            // To parameterize data selection:
-            // const query = "SELECT * FROM appointments WHERE id = ?";
+    async getAppointmentInfo(st_fname, st_lname, st_email, app_date, app_time) {
+        try {
+            // Creating a new promise in which will handle our query.
+            // We will either resolve or reject the query.
+            // If rejected, will go into catch block.
+            const response = await new Promise((resolve, reject) => {
+                // The query statement. 
+                const query = "SELECT * FROM appointment WHERE st_fname = ? AND st_lname = ? AND st_email = ? AND app_date = ? AND app_time = ? ORDER BY ref_num DESC";
+                // To parameterize data selection:
+                // const query = "SELECT * FROM appointments WHERE id = ?";
 
-            connection.query(query, [st_fname, st_lname, st_email, app_date, app_time], (error, results) => {
-                if (error) reject(new Error(error.message));
-                resolve(results);
+                connection.query(query, [st_fname, st_lname, st_email, app_date, app_time], (error, results) => {
+                    if (error) reject(new Error(error.message));
+                    resolve(results);
+                });
+                // To parameterize data selection:
+                // connect.query(query, [id]);
             });
-            // To parameterize data selection:
-            // connect.query(query, [id]);
-        });
-        return response;
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getAppointmentStatus(ref_num, st_email) {
+        try{
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT ref_num, st_fname, st_lname, app_date, app_time FROM appointment WHERE ref_num = ? AND st_email = ? ORDER BY ref_num DESC";
+                connection.query(query, [ref_num, st_email], (error, results) => {
+
+                    if (error) reject(new Error(error.message));
+                    resolve(results);
+                });
+            });
+            return response;
         } catch (error) {
             console.log(error);
         }
