@@ -175,10 +175,26 @@ h1{
 }
 
 .message{
-    color: red;
+    color: black;
     padding: 10px;
     padding-left: 25px;
     padding-right: 25px;
     border-radius: 3px;
     font-size: 15px;
+}
+
+.calendar{
+    border: none;
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #2d659f;
+    border-radius: 12px;
+    padding: 7px 15px;
+    margin-bottom: 10px;
+    max-width: 250px;
+}
+
+.calendar:hover{
+    cursor: pointer;
+    background-color: black;
 }

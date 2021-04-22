@@ -15,6 +15,9 @@
       <script src = "js\jquery.timepicker.min.js"></script>
       <script type="text/javascript"> var jQueryTime = jQuery.noConflict(true); </script>
 
+      <script type="text/javascript" src="https://addevent.com/libs/atc/1.6.1/atc.min.js" async defer></script>
+
+
       <title>UTAppointments</title>
    </head>	
    <body>
@@ -22,8 +25,22 @@
          <img src="../../images/home-logo.png" alt="home" width="30" height="25">
       </a>
       <h1>Book Appointment</h1>
-
-      <span id='displayMessage' class="disable message"></span>
+      <!-- Button code     -->
+      <span id='displayMessage' class = "disable message">
+      <p id='appointmentMessage'></p> 
+      
+  
+      <div title="Add to Calendar" class="addeventatc  message">
+         
+         Add to Calendar
+         <span class="start">05/06/2021 08:00 AM</span>
+         <span class="end">05/06/2021 10:00 AM</span>
+         <span class="timezone">America/Los_Angeles</span>
+         <span class="title">Office Hours Appointment</span>
+         <span class="description">Description of the event</span>
+         <span class="location">Microsoft Teams</span>
+      </div>
+      </span>
       <div id = hide>
       <span id='displayError' class="error">
       </span>
