@@ -9,11 +9,6 @@ router.get('/', (req, response) => {
 
 router.post("/insertAppointment", (request, response) => {
     const { st_fname, st_lname, st_email, app_date, app_time } = request.body;
-    console.log(st_fname);
-    console.log(st_lname);
-    console.log(st_email);
-    console.log(app_date);
-    console.log(app_time);
   
     const db = dbService.getDbServiceInstance();
     const result = db.insertAppointment(
@@ -51,7 +46,21 @@ router.get("/getKeys", (req, response) => {
     result
       .then((data) => response.json({ data: data }))
       .catch((error) => console.log(error));
-    });
+});
+
+// Obtain appointment information from the database.
+router.post("/getAppointmentInfo", (request, response) => {
+  // Grab DbService object.
+  const { st_fname, st_lname, st_email, app_date, app_time } = request.body;
+
+  const db = dbService.getDbServiceInstance();
+
+  const result = db.getAppointmentInfo(st_fname, st_lname, st_email, app_date, app_time);
+
+  result
+    .then((data) => response.json({ data: data }))
+    .catch((error) => console.log(error));
+});
 
   
 module.exports = router;

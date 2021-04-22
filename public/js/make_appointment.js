@@ -17,7 +17,7 @@ var date = document.getElementById("datepicker");
 var time = document.getElementById("time");
 var time_label = document.getElementById("time_label");
 var error = document.getElementById("displayError");
-
+var message = document.getElementById("displayMessage");
 var disabled_dates = [];
 var availability = [];
 getAvailability();
@@ -136,7 +136,7 @@ function bookAppointment() {
             body: JSON.stringify({st_fname: fname_, st_lname: lname_, st_email: email_, app_date: date__, app_time: time__})
         })
         .then(response => response.json())
-        .then(alert ('Appointment booked.'))
+        .then(data => test(data['success']))
         .then(form.reset())
     } else {
         alert('No appointment booked.');
@@ -145,6 +145,36 @@ function bookAppointment() {
     //alert(`Appointment booked for ${apt.getStudent.getName} on ${apt.getDate} for ${apt.timeLength} minutes.`);
 }
 
+
+function test(data) {
+    const fname = data['fname'];
+    const lname = data['lname'];
+    const email = data['email'];
+    const date = data['date'];
+    const time = data['time'];
+
+    fetch('http://localhost:5000/appointment/getAppointmentInfo', {
+        headers: {
+            'Content-type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({st_fname: fname, st_lname: lname, st_email: email, app_date: date, app_time: time})
+    })
+    .then(response => response.json())
+    .then(data => { 
+        document.getElementById('hide').style.display = 'none';
+        var message_ = data['data'];
+        message_ = message_[0];
+        var message_text = "Appointment booked for " + message_['st_fname'] + " " + message_['st_lname'] + 
+                                                "\nReference Number is " + message_['ref_num'];
+
+        message.innerHTML = message_text;
+
+        message.style.display = 'block';
+        console.log(data['data']);
+    });
+
+}
 
 /*  enable_date() function sets up the date input field in the webpage.
     The date field has minimum date of today + 2 days and maximum date of
@@ -328,7 +358,7 @@ function check_email(email_){
         error.innerHTML = "Do not leave email empty";
         valid_email = false;
     }
-    else if(domain.length == 2 && domain[0].length != 0 && domain[1] == 'mavs.uta.edu' ){
+    else if(domain.length == 2 && domain[0].length != 0 && domain[1] == 'mavs.uta.edu'){
         error.innerHTML = "";
         valid_email = true;
     }
