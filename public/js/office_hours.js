@@ -1,3 +1,7 @@
+import {numToDay} from './utilities.js'
+import {to12hour} from './utilities.js'
+import {to24hour} from './utilities.js'
+
 getAvailability();
 
 var button_insert = document.getElementById("insert");
@@ -5,6 +9,26 @@ var button_delete = document.getElementById("delete");
 
 button_insert.addEventListener("click", insert_availability);
 button_delete.addEventListener("click", delete_availability);
+
+$(document).ready(function(){
+    $('#start_time').timepicker({
+        minTime: '8:00 AM',
+        maxTime: '11:30 PM',
+        step: 10,
+        lang: {am: ' AM', pm: ' PM', AM: 'am', PM: 'pm', decimal: '.', mins: 'mins', hr: 'hr', hrs: 'hrs' },
+        scrollbar: 'true',
+        disableTextInput: 'true'
+    }); 
+    $('#end_time').timepicker({
+        minTime: '8:00 AM',
+        maxTime: '11:30 PM',
+        step: 10,
+        lang: {am: ' AM', pm: ' PM', AM: 'am', PM: 'pm', decimal: '.', mins: 'mins', hr: 'hr', hrs: 'hrs' },
+        scrollbar: 'true',
+        disableTextInput: 'true'
+    });
+
+});
 
 function delete_availability(){
     var day = (document.getElementById("day")).value;
@@ -90,86 +114,4 @@ function getAvailability(){
     .then(response => response.json())
     .then(data => { loadHTMLTable(data['data']);
     });
-}
-
-function numToDay(number){
-    switch(number){
-        case 0:
-            return 'Sunday';
-        break;
-        case 1:
-            return 'Monday';
-        break;
-        case 2:
-            return 'Tuesday'; 
-        break;
-        case 3:
-            return 'Wednesday';
-        break;
-        case 4:
-            return 'Thursday';
-        break;
-        case 5:
-            return 'Friday';
-        break;
-        case 6:
-            return 'Saturday';
-        break;
-        default:
-            return 'Invalid day';
-    }
-}
-
-// converts 24 hour time format to 12 hour
-function to12hour(time_){
-    var result = "";
-    var time_array = time_.split(':', 3);
-
-    if(parseInt(time_array[0]) >= 0){
-        var hour = parseInt(time_array[0]);
-        var ampm = "AM";
-
-        if (hour == 0){
-            hour = 12;
-        }
-        else{
-            if (hour >= 12){
-                ampm = "PM";   
-            }
-            if (hour > 12){
-                hour = hour - 12;
-            }
-        }
-        result = hour.toString() + ":" + time_array[1] + " " + ampm;
-        return result;
-    }
-    else{
-        console.log("Invalid Time Inputs");
-    }
-}
-
-// converts 12 hour time format to 24 hour
-function to24hour(time_){
-    var result = "";
-    var time_i = time_.split(' ');
-    var time_array = time_i[0].split(':')
-
-    if(parseInt(time_array[0])){
-        var hour = parseInt(time_array[0]);
-        if (time_i[1] == "PM"){
-            if(hour < 12){
-                hour = hour + 12;
-            }
-        }
-        else if (time_i[1] = "AM"){
-            if(hour == 12){
-                hour = 0;
-            }
-        }
-        result = hour.toString() + ":" + time_array[1] + ":00";
-        return result;
-    }
-    else{
-        console.log("Invalid Time Input");
-    }
 }

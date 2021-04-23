@@ -1,15 +1,11 @@
-import Student from "./Student.js";
-import Appointment from "./Appointment.js";
 import {numToDay} from './utilities.js'
 import {to12hour} from './utilities.js'
 import {to24hour} from './utilities.js'
 import {dateYY} from './utilities.js'
-//const { response } = require("express");
 
-//initiate all data on form
+// Initialize all elements in the page
 var form = document.getElementById("myform");
 var button = document.getElementById("submit");
-
 var fname = document.getElementById("fname");
 var lname = document.getElementById("lname");
 var email = document.getElementById("email");
@@ -23,12 +19,29 @@ var start = document.getElementById("start");
 var end = document.getElementById("end");
 var description = document.getElementById("description");
 
+// disabled_dates array stores dates that does not have office hours (MM-DD-YYYY)
+// availability is a 2D array that stores [day, start_time, end_time] in each row. Eg. [1, '10:00 AM','12:30 PM']
+// bookedSpots is a 2D array that stores [date, time] in each row ['04-05-2021', '10:00 AM]
 var disabled_dates = [];
 var availability = [];
 var bookedSpots = [];
 
+// Obtain availability and booked spots from the database.
 getAvailability();
 getBookedSpots();
+
+// Initialize pop up for displaying office hours.
+jQuery(window).load(function () {
+    jQuery(".trigger_popup_fricc").click(function(){
+       jQuery('.hover_bkgr_fricc').show();
+    });
+    jQuery('.hover_bkgr_fricc').click(function(){
+        jQuery('.hover_bkgr_fricc').hide();
+    });
+    jQuery('.popupCloseButton').click(function(){
+        jQuery('.hover_bkgr_fricc').hide();
+    });
+});
 
 var valid_fname = false;
 var valid_lname = false;
@@ -90,14 +103,12 @@ function bookAppointment() {
         return 0;
     }
     
-
     var time__ = to24hour(time_);
     var date__ = dateYY(date_);
     var confirmation = confirm(`Are you sure you want to book appointment for ${fname_} ${lname_} on ${date_} at ${time_}?`);
-    // Send data to server for inserting appointment into the database
-    //
-
+   
     if (confirmation == true) {
+         // Send appointment information to server for inserting appointment information into the database.
         fetch('http://localhost:5000/appointment/insertAppointment',{
             headers: {
                 'Content-type': 'application/json'
@@ -106,17 +117,14 @@ function bookAppointment() {
             body: JSON.stringify({st_fname: fname_, st_lname: lname_, st_email: email_, app_date: date__, app_time: time__})
         })
         .then(response => response.json())
-        .then(data => test(data['success']))
+        .then(data => booked(data['success']))
         .then(form.reset())
     } else {
         alert('No appointment booked.');
     }
-
-    //alert(`Appointment booked for ${apt.getStudent.getName} on ${apt.getDate} for ${apt.timeLength} minutes.`);
 }
 
-
-function test(data) {
+function booked(data) {
     const fname = data['fname'];
     const lname = data['lname'];
     const email = data['email'];
@@ -133,31 +141,104 @@ function test(data) {
     .then(response => response.json())
     .then(data => { 
         document.getElementById('hide').style.display = 'none';
-        var message_ = data['data'];
-        message_ = message_[0];
-        let date = new Date(message_['app_date']).toLocaleString();
-        var temp = date.split(',');
-        let time = to12hour(message_['app_time']);
-        date = temp[0];
-        var message_text = "Appointment booked for " + message_['st_fname'] + " " + message_['st_lname'] +
-                                               " on " + date +  " at " + time +
-                                               ". Reference Number is " + message_['ref_num'];
+        
+        var appointmentInfo = data['data'];
+        appointmentInfo = appointmentInfo[0];
+
+        // Formatting date to MM/DD/YYYY
+        let date = new Date(appointmentInfo['app_date']);
+        var day = date.getDate().toString().padStart(2, '0');
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var year = date.getFullYear();
+        date = month + '/' + day + '/' + year;
+
+        let time = to12hour(appointmentInfo['app_time']);
+
+        var message_text = "Appointment booked for " + appointmentInfo['st_fname'] + " " + 
+                                                appointmentInfo['st_lname'] + " on " + date +  " at " + 
+                                                time + ". Reference Number is " + appointmentInfo['ref_num'];
 
         message.innerHTML = message_text;
 
+        // Setting up information for Add To Calendar funcationality 
         var tempdate = new Date(date + " " + time);
         tempdate.setMinutes(tempdate.getMinutes() + 10);
 
-        var endtime = tempdate.getHours() + ":" + tempdate.getMinutes() + ":" + tempdate.getSeconds();
+        var endtime = tempdate.getHours() + ":" + tempdate.getMinutes().toString().padStart(2, '0') + ":" + tempdate.getSeconds().toString().padStart(2, '0');
+        
+        console.log(endtime);
         endtime = to12hour(endtime);
+
+        
         start.innerHTML = date + " " + time;
         end.innerHTML = date + " " + endtime;
-        description.innerHTML = "Reference Number: " + message_['ref_num'];
+        description.innerHTML = "Reference Number: " + appointmentInfo['ref_num'];
 
         messageBox.style.display = 'block';
     });
 
 }
+
+
+
+function getBookedSpots(){
+    fetch('http://localhost:5000/appointment/getBookedSpots')
+    .then(response => response.json())
+    .then(data => {fillBookedSpots(data['data']);
+    });
+}
+
+function fillBookedSpots(data){
+    data.forEach(function ({app_date, app_time}){
+        app_time = to12hour(app_time);
+        let date = new Date(app_date);
+        var day = date.getDate().toString().padStart(2, '0');
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var year = date.getFullYear();
+        var temp = month + '-' + day + '-' + year;
+
+        bookedSpots.push([temp, app_time]);
+    });
+}
+
+
+// API call to get office hours, after completion, load the pop up HTML
+function getAvailability(){
+    fetch('http://localhost:5000/appointment/getAvailability')
+    .then(response => response.json())
+    .then(data => { loadHTMLTable(data['data']);
+    });
+}
+
+
+// loads HTML, stores information in global array availability[day, start_time, end_time]
+function loadHTMLTable(data) {
+    
+    const table = document.querySelector('table tbody');
+    if(data.length === 0) {
+        table.innerHTML = "<tr><td class='no-data' colspan='3'> No office hours </td></tr>";
+        return;
+    }
+    
+    let tableHTML = "";
+
+    data.forEach(function ({day, start_time, end_time}){
+        
+        start_time = to12hour(start_time);
+        end_time = to12hour(end_time);
+        availability.push([day, start_time, end_time]);
+        day = numToDay(day);
+        tableHTML += "<tr>";
+        tableHTML += `<td>${day}</td>`;
+        tableHTML += `<td>${start_time}</td>`;
+        tableHTML += `<td>${end_time}</td>`;
+        tableHTML += "</tr>";
+    });
+    table.innerHTML = tableHTML;
+
+    enable_date();
+}
+
 
 /*  enable_date() function sets up the date input field in the webpage.
     The date field has minimum date of today + 2 days and maximum date of
@@ -220,80 +301,58 @@ function enable_date() {
 };
 
 
-// Pop up for office hours
-jQuery(window).load(function () {
-    jQuery(".trigger_popup_fricc").click(function(){
-       jQuery('.hover_bkgr_fricc').show();
-    });
-    jQuery('.hover_bkgr_fricc').click(function(){
-        jQuery('.hover_bkgr_fricc').hide();
-    });
-    jQuery('.popupCloseButton').click(function(){
-        jQuery('.hover_bkgr_fricc').hide();
-    });
-});
+
+function enable_time(date){
+    if(date){
+        error.innerHTML = "";
+        var temp = new Date(date);
+        var day = temp.getDay();
+        for(var i = 0; i < availability.length; i++){
+            if(availability[i][0] == day){
+                break;
+            }
+        }
+
+        var bookedSpotCount = bookedSpots.length;
+        var disableForCurrentDate = [];
+
+        for(var j = 0; j < bookedSpotCount; j++){
 
 
-// API call to get office hours, after completion, load the pop up HTML
-function getAvailability(){
-    fetch('http://localhost:5000/appointment/getAvailability')
-    .then(response => response.json())
-    .then(data => { loadHTMLTable(data['data']);
-    });
-}
-
-function getBookedSpots(){
-    fetch('http://localhost:5000/appointment/getBookedSpots')
-    .then(response => response.json())
-    .then(data => {fillBookedSpots(data['data']);
-    });
-}
-
-
-// loads HTML, stores information in global array availability[day, start_time, end_time]
-// enable_date()
-function loadHTMLTable(data) {
-    
-    const table = document.querySelector('table tbody');
-    if(data.length === 0) {
-        table.innerHTML = "<tr><td class='no-data' colspan='3'> No office hours </td></tr>";
-        return;
-    }
-    
-    let tableHTML = "";
-
-    data.forEach(function ({day, start_time, end_time}){
+            if(bookedSpots[j][0] == date){
+                var tempdate = new Date(date + " " + bookedSpots[j][1]);
+                tempdate.setMinutes(tempdate.getMinutes() + 10);
         
-        start_time = to12hour(start_time);
-        end_time = to12hour(end_time);
-        availability.push([day, start_time, end_time]);
-        day = numToDay(day);
-        tableHTML += "<tr>";
-        tableHTML += `<td>${day}</td>`;
-        tableHTML += `<td>${start_time}</td>`;
-        tableHTML += `<td>${end_time}</td>`;
-        tableHTML += "</tr>";
-    });
-    table.innerHTML = tableHTML;
+                var disableUpperRange = tempdate.getHours() + ":" + tempdate.getMinutes().toString().padStart(2, '0') + ":" + tempdate.getSeconds().toString().padStart(2, '0');
+                disableUpperRange = to12hour(disableUpperRange);
 
-    enable_date();
+                disableForCurrentDate.push([bookedSpots[j][1], disableUpperRange]);
+            }
+        }
+
+        jQueryTime('#time').timepicker({
+            step: 10,
+            lang: {am: ' AM', pm: ' PM', AM: 'am', PM: 'pm', decimal: '.', mins: 'mins', hr: 'hr', hrs: 'hrs' },
+            scrollbar: 'true',
+            disableTextInput: 'true',
+            disableTimeRanges : disableForCurrentDate
+        });
+
+        jQueryTime('#time').timepicker('option', 'minTime', availability[i][1]); 
+        jQueryTime('#time').timepicker('option', 'maxTime', availability[i][2]); 
+
+        time.style.display = "block";
+        time_label.style.display = "block";
+    }
+    else{
+        time.style.display = "none";
+        time_label.style.display = "none";
+    }
 }
 
-function fillBookedSpots(data){
-    data.forEach(function ({app_date, app_time}){
-        app_time = to12hour(app_time);
-        let date = new Date(app_date);
-        var day = date.getDate().toString().padStart(2, '0');
-        var month = (date.getMonth() + 1).toString().padStart(2, '0');
-        var year = date.getFullYear();
-        var temp = month + '-' + day + '-' + year;
 
-        bookedSpots.push([temp, app_time]);
-    });
-    console.log(bookedSpots);
-}
 
-// Checks if key matches
+//*********************************** Validation functions ********************************
 function checkKeys(){
     
     fetch('http://localhost:5000/appointment/getKeys')
@@ -318,62 +377,6 @@ function checkKeys(){
             bookAppointment();
         }
     });
-}
-
-
-
-function enable_time(date){
-    if(date){
-        error.innerHTML = "";
-        var temp = new Date(date);
-        var day = temp.getDay();
-        for(var i = 0; i < availability.length; i++){
-            if(availability[i][0] == day){
-                break;
-            }
-        }
-
-
-
-        
-        var bookedSpotCount = bookedSpots.length;
-        var disableForCurrentDate = [];
-
-        for(var j = 0; j < bookedSpotCount; j++){
-
-
-            if(bookedSpots[j][0] == date){
-                var tempdate = new Date(date + " " + bookedSpots[j][1]);
-                tempdate.setMinutes(tempdate.getMinutes() + 10);
-        
-                var disableUpperRange = tempdate.getHours() + ":" + tempdate.getMinutes() + ":" + tempdate.getSeconds();
-                disableUpperRange = to12hour(disableUpperRange);
-
-                disableForCurrentDate.push([bookedSpots[j][1], disableUpperRange]);
-            }
-        }
-
-
-    
-
-        jQueryTime('#time').timepicker({
-            step: 10,
-            lang: {am: ' AM', pm: ' PM', AM: 'am', PM: 'pm', decimal: '.', mins: 'mins', hr: 'hr', hrs: 'hrs' },
-            scrollbar: 'true',
-            disableTextInput: 'true',
-            disableTimeRanges : disableForCurrentDate
-        });
-
-        jQueryTime('#time').timepicker('option', 'minTime', availability[i][1]); 
-        jQueryTime('#time').timepicker('option', 'maxTime', availability[i][2]); 
-
-        time.style.display = "block";
-        time_label.style.display = "block";
-    }
-    else{
-        time.style.display = "none";
-        time_label.style.display = "none";
-    }
 }
 
 
