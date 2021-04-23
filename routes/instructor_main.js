@@ -16,6 +16,7 @@ router.get("/getAvailability", controller.getAvailability);
 
 // Schedule page functions.
 router.get("/getAppointments", controller.getAppointments);
+router.delete("/deleteAppointment/:refnum", controller.deleteAppointment);
 
 // Update key page functions.
 router.patch("/updateKey", controller.updateKey);

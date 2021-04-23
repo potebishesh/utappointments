@@ -1,9 +1,15 @@
 getAppointments();
 
+document.querySelector('table tbody').addEventListener('click', function(event) {
+    if (event.target.className === "delete-row-btn") {
+        deleteRowByRefNum(event.target.dataset.id);
+    }
+});
+
 function loadHTMLTable(data) {  
     const table = document.querySelector('table tbody');
     if(data.length === 0) {
-        table.innerHTML = "<tr><td class='no-data' colspan='3'> No Appointments </td></tr>";
+        table.innerHTML = "<tr><td class='no-data' colspan='8'> No Appointments </td></tr>";
         return;
     }
     
@@ -18,6 +24,7 @@ function loadHTMLTable(data) {
         tableHTML += `<td>${st_fname}</td>`;
         tableHTML += `<td>${st_lname}</td>`;
         tableHTML += `<td>${st_email}</td>`;
+        tableHTML += `<td><button class="delete-row-btn" data-id=${ref_num}>Delete</td>`
         tableHTML += "</tr>";
     });
 
@@ -28,5 +35,17 @@ function getAppointments(){
     fetch('http://localhost:5000/instructor_main/getAppointments')
     .then(response => response.json())
     .then(data => { loadHTMLTable(data['data']);
+    });
+}
+
+function deleteRowByRefNum(ref_num) {
+    fetch('http://localhost:5000/instructor_main/deleteAppointment/' + ref_num, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        }
     });
 }

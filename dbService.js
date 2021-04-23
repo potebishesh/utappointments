@@ -341,7 +341,24 @@ class DbService {
         }
     }
 
-
+    async deleteRowByRefNum(ref_num) {
+        try {
+            ref_num = parseInt(ref_num, 10);
+            const response = await new Promise((resolve, reject) => {
+                const query = "DELETE FROM appointment WHERE ref_num = ?";
+    
+                connection.query(query, [ref_num] , (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                })
+            });
+    
+            return response === 1 ? true : false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
 }
 
 

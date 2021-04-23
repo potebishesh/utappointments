@@ -66,3 +66,14 @@ exports.updateKey = (request, response) => {
       .then((data) => response.json({ success: data }))
       .catch((err) => console.log(err));
 }
+
+exports.deleteAppointment = (request, response) => {
+    const { refnum } = request.params;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.deleteRowByRefNum(refnum);
+
+    result
+    .then(data => response.json({success : data}))
+    .catch(err => console.log(err));
+}
