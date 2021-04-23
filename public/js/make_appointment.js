@@ -332,12 +332,36 @@ function enable_time(date){
                 break;
             }
         }
+
+
+
         
+        var bookedSpotCount = bookedSpots.length;
+        var disableForCurrentDate = [];
+
+        for(var j = 0; j < bookedSpotCount; j++){
+
+
+            if(bookedSpots[j][0] == date){
+                var tempdate = new Date(date + " " + bookedSpots[j][1]);
+                tempdate.setMinutes(tempdate.getMinutes() + 10);
+        
+                var disableUpperRange = tempdate.getHours() + ":" + tempdate.getMinutes() + ":" + tempdate.getSeconds();
+                disableUpperRange = to12hour(disableUpperRange);
+
+                disableForCurrentDate.push([bookedSpots[j][1], disableUpperRange]);
+            }
+        }
+
+
+    
 
         jQueryTime('#time').timepicker({
-            interval:'10',
+            step: 10,
+            lang: {am: ' AM', pm: ' PM', AM: 'am', PM: 'pm', decimal: '.', mins: 'mins', hr: 'hr', hrs: 'hrs' },
             scrollbar: 'true',
-            disableTextInput: 'true'
+            disableTextInput: 'true',
+            disableTimeRanges : disableForCurrentDate
         });
 
         jQueryTime('#time').timepicker('option', 'minTime', availability[i][1]); 
