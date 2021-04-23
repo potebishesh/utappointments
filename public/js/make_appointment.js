@@ -19,6 +19,10 @@ var time_label = document.getElementById("time_label");
 var error = document.getElementById("displayError");
 var messageBox = document.getElementById("displayMessage");
 var message = document.getElementById("appointmentMessage")
+var start = document.getElementById("start");
+var end = document.getElementById("end");
+var description = document.getElementById("description");
+
 var disabled_dates = [];
 var availability = [];
 getAvailability();
@@ -28,40 +32,6 @@ var valid_lname = false;
 var valid_email = false;
 
 
-/*
-
- var timeInput = timeInput = document.createElement('input');
-timeInput.setAttribute('type', 'text');
-timeInput.setAttribute('name', 'time');
-timeInput.setAttribute('class', 'login_input');
-timeInput.setAttribute('id', 'time');
-
-
-
-if(timeInput){
-    console.log('it is there');
-}
-else{
-    console.log('not there');
-}
-
-var container = document.getElementById('container');
-timeInput.style.display = "block";
-
-container.appendChild(timeInput);
-timeInput.value = "asdfasdf";
-
-timeInput.remove();
-
-console.log(timeInput.val)
-
-if(timeInput){
-    console.log(timeInput);
-}
-else{
-    console.log('not there');
-}
-*/
 fname.focus();
 
 time.addEventListener("focus", function(){
@@ -85,11 +55,7 @@ date.addEventListener("focusout", function(){
 key.addEventListener("focusout", function(){
     error.innerHTML = "";
 })
-/*
-time.addEventListener("click", function(){
-    time.value = "";
-})
-*/
+
 
 button.addEventListener("click", checkKeys);
 
@@ -168,12 +134,22 @@ function test(data) {
         message_ = message_[0];
         let date = new Date(message_['app_date']).toLocaleString();
         var temp = date.split(',');
+        let time = to12hour(message_['app_time']);
         date = temp[0];
         var message_text = "Appointment booked for " + message_['st_fname'] + " " + message_['st_lname'] +
-                                               " on " + date +  " at " + to12hour(message_['app_time']) + 
+                                               " on " + date +  " at " + time +
                                                ". Reference Number is " + message_['ref_num'];
 
         message.innerHTML = message_text;
+
+        var tempdate = new Date(date + " " + time);
+        tempdate.setMinutes(tempdate.getMinutes() + 10);
+
+        var endtime = tempdate.getHours() + ":" + tempdate.getMinutes() + ":" + tempdate.getSeconds();
+        endtime = to12hour(endtime);
+        start.innerHTML = date + " " + time;
+        end.innerHTML = date + " " + endtime;
+        description.innerHTML = "Reference Number: " + message_['ref_num'];
 
         messageBox.style.display = 'block';
     });
