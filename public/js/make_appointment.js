@@ -25,7 +25,10 @@ var description = document.getElementById("description");
 
 var disabled_dates = [];
 var availability = [];
+var bookedSpots = [];
+
 getAvailability();
+getBookedSpots();
 
 var valid_fname = false;
 var valid_lname = false;
@@ -239,6 +242,13 @@ function getAvailability(){
     });
 }
 
+function getBookedSpots(){
+    fetch('http://localhost:5000/appointment/getBookedSpots')
+    .then(response => response.json())
+    .then(data => {fillBookedSpots(data['data']);
+    });
+}
+
 
 // loads HTML, stores information in global array availability[day, start_time, end_time]
 // enable_date()
@@ -269,6 +279,19 @@ function loadHTMLTable(data) {
     enable_date();
 }
 
+function fillBookedSpots(data){
+    data.forEach(function ({app_date, app_time}){
+        app_time = to12hour(app_time);
+        let date = new Date(app_date);
+        var day = date.getDate().toString().padStart(2, '0');
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var year = date.getFullYear();
+        var temp = month + '-' + day + '-' + year;
+
+        bookedSpots.push([temp, app_time]);
+    });
+    console.log(bookedSpots);
+}
 
 // Checks if key matches
 function checkKeys(){
@@ -313,7 +336,8 @@ function enable_time(date){
 
         jQueryTime('#time').timepicker({
             interval:'10',
-            scrollbar: 'true'
+            scrollbar: 'true',
+            disableTextInput: 'true'
         });
 
         jQueryTime('#time').timepicker('option', 'minTime', availability[i][1]); 

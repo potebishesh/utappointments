@@ -194,6 +194,31 @@ class DbService {
         }
     }
 
+    async getBookedSpots() {
+        try {
+            const today = new Date();
+            // Creating a new promise in which will handle our query.
+            // We will either resolve or reject the query.
+            // If rejected, will go into catch block.
+            const response = await new Promise((resolve, reject) => {
+                // The query statement.
+                const query = "SELECT app_date, app_time FROM appointment WHERE app_date > ?";
+                // To parameterize data selection:
+                // const query = "SELECT * FROM appointments WHERE id = ?";
+
+                connection.query(query, [today], (error, results) => {
+                    if (error) reject(new Error(error.message));
+                    resolve(results);
+                });
+                // To parameterize data selection:
+                // connect.query(query, [id]);
+            });
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     // Using async to get our instructor information
     async getInstructorData() {
         try {

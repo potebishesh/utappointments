@@ -56,3 +56,12 @@ exports.getAppointmentInfo = (request, response) => {
     .then((data) => response.json({ data: data }))
     .catch((error) => console.log(error));
 }
+
+exports.getBookedSpots = (req, response) => {
+  // Grab DbService object.
+  const db = dbService.getDbServiceInstance();
+  const result = db.getBookedSpots();
+  result
+    .then((data) => response.json({ data: data }))
+    .catch((error) => console.log(error));
+}

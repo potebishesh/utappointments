@@ -18,4 +18,6 @@ router.get("/getKeys", controller.getKeys);
 // Obtain appointment information from the database.
 router.post("/getAppointmentInfo", controller.getAppointmentInfo); 
 
+router.get("/getBookedSpots", controller.getBookedSpots);
+
 module.exports = router;
