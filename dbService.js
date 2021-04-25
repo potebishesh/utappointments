@@ -156,9 +156,11 @@ class DbService {
 
     async getAppointmentData() {
         try {
+            const currentDate = new Date();
+
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM appointment ORDER BY app_date DESC, app_time DESC";
-                connection.query(query, (error, results) => {
+                const query = "SELECT * FROM appointment WHERE app_date >= ? ORDER BY app_date ASC, app_time ASC ";
+                connection.query(query, [currentDate], (error, results) => {
                     if (error) reject(new Error(error.message));
                     resolve(results);
                 });
