@@ -444,6 +444,66 @@ class DbService {
       return false;
     }
   }
+
+  async updatePasswordResetToken(token, email) {
+    try {
+      // Creating a new promise in which will handle our query.
+      // We will either resolve or reject the query.
+      // If rejected, will go into catch block.
+      const response = await new Promise((resolve, reject) => {
+        // The query statement.
+        const query =
+          "UPDATE instructor SET resetPasswordToken = ? WHERE in_email = ?;";
+
+        connection.query(query, [token, email], (err, result) => {
+          if (err) reject(new Error(err.message));
+          resolve(result);
+          console.log(result);
+        });
+      });
+
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  //insert password reset link expiration time into correct user's column for 1 hour
+  async updatePasswordResetExpiration(email) {
+    try {
+      // Creating a new promise in which will handle our query.
+      // We will either resolve or reject the query.
+      // If rejected, will go into catch block.
+      const response = await new Promise((resolve, reject) => {
+        // The query statement.
+        const query =
+          "UPDATE instructor SET resetPasswordExpires = ? WHERE in_email = ?;";
+
+        connection.query(
+          query,
+          [
+            new Date(Date.now() + 3600000)
+              .toISOString()
+              .slice(0, 19)
+              .replace("T", " "),
+            email,
+          ],
+          (err, result) => {
+            //input value is a way to convert javascript date value to correct mysql datetime value
+            if (err) reject(new Error(err.message));
+            resolve(result);
+            console.log(result);
+          }
+        );
+      });
+
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
 }
 
 // Export our Dbservice class
