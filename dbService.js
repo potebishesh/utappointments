@@ -171,6 +171,24 @@ class DbService {
         }
     }
 
+    async getHistoryData() {
+        try {
+            const currentDate = new Date();
+
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM appointment WHERE app_date < ? ORDER BY app_date DESC, app_time DESC ";
+                connection.query(query, [currentDate], (error, results) => {
+                    if (error) reject(new Error(error.message));
+                    resolve(results);
+                });
+            });
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
     // Using async to get our office hours availability
     async getAvailabilityData() {
         try {

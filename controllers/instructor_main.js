@@ -4,6 +4,10 @@ exports.renderInstructorPage = (request, response) => {
     response.render('instructor_main.ejs');
 }
 
+exports.renderHistoryPage = (request, response) => {
+    response.render('history.ejs')
+}
+
 exports.renderSchedulePage = (request, response) => {
     response.render('schedule.ejs')
 }
@@ -51,6 +55,16 @@ exports.getAppointments = (req, response) => {
     const db = dbService.getDbServiceInstance();
   
     const result = db.getAppointmentData();
+  
+    result
+      .then((data) => response.json({ data: data }))
+      .catch((error) => console.log(error));
+}
+
+exports.getHistory = (req, response) => {
+    const db = dbService.getDbServiceInstance();
+  
+    const result = db.getHistoryData();
   
     result
       .then((data) => response.json({ data: data }))
