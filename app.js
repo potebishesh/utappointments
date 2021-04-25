@@ -12,6 +12,9 @@ const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 const methodOverride = require("method-override");
+const async = require("async");
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
 
 // Express setup
 const app = express();
@@ -41,6 +44,7 @@ app.use(express.static("public")); // Tell express our static files are in publi
 //app.engine("html", require("ejs").renderFile); // Render HTML with ejs
 app.set("views", __dirname + "/views"); // Set view's folder to right path
 //app.set("view engine", "html"); // Set view engine to HTML instead of EJS
+
 
 const initializePassport = require("./passport-config");
 
