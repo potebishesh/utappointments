@@ -26,7 +26,8 @@ var disabled_dates = [];
 var availability = [];
 var bookedSpots = [];
 
-// Obtain availability and booked spots from the database.
+// Obtain disabled_dates, availability and booked spots from the database.
+getDisabledDates();
 getAvailability();
 getBookedSpots();
 
@@ -350,6 +351,26 @@ function enable_time(date){
     }
 }
 
+
+function getDisabledDates(){
+    fetch('http://localhost:5000/instructor_main/getDisabledDates')
+    .then(response => response.json())
+    .then(data => { fillDisabledDates(data['data']);
+    });
+}
+
+function fillDisabledDates(data){
+    data.forEach(function ({d_dates}){
+        var date = new Date(d_dates);
+        var day = date.getDate().toString().padStart(2, '0');
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var year = date.getFullYear();
+
+        var disabled_date = month + "-" + day + "-" + year;
+
+        disabled_dates.push(disabled_date);
+    });
+}
 
 
 //*********************************** Validation functions ********************************
