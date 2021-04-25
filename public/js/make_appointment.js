@@ -166,7 +166,7 @@ function booked(data) {
 
         var endtime = tempdate.getHours() + ":" + tempdate.getMinutes().toString().padStart(2, '0') + ":" + tempdate.getSeconds().toString().padStart(2, '0');
         
-        console.log(endtime);
+
         endtime = to12hour(endtime);
 
         
