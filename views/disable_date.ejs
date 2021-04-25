@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../css/style.css">
+
+        <link href = "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel = "stylesheet">
+      
+        <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <script type="text/javascript"> var jQuery = jQuery.noConflict(true); </script>
+
+        <title>Schedule</title>
+    </head>	
+    <body>
+        <a href="/instructor_main" class="header_logo"> 
+            <img src="../images/Back_Arrow.svg" alt="home" width="40" height="40">
+        </a>
+        <h1>
+            Disable Date
+        </h1>
+
+        <div class="buttons">
+        <span id='displayError' class="error">
+        </span>
+        <br>
+        <br>
+        <label for="date">Pick a date to disable:</label>
+        <input type="text" id="datepicker" name="date" class="login_input" autocomplete="off">
+        <input type="submit" id="submit" value="Disable Date" class="submit_button">
+        </div>
+
+        <table id="table" class="content-table">
+            <thead>
+                <th>Disabled Date</th>
+                <th>Delete</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <script type="module" src="..\js\disable_date.js"> </script>
+    </body>
+</html>

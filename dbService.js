@@ -89,6 +89,22 @@ class DbService {
         }
     }
 
+    async disableSelectedDate(date) {
+        try {
+            const insertId = await new Promise((resolve, reject) => {
+                const query = "INSERT INTO disabled_dates VALUES (?);";
+
+                connection.query(query, [date] , (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);
+                })
+            });
+            return true;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     // Using a async to get our appointment keys
     async getKeysData() {
         try {
@@ -154,6 +170,8 @@ class DbService {
         }
     }
 
+
+
     async getAppointmentData() {
         try {
             const currentDate = new Date();
@@ -207,6 +225,21 @@ class DbService {
                 });
                 // To parameterize data selection:
                 // connect.query(query, [id]);
+            });
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getDisabledDates() {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM disabled_dates";
+                connection.query(query, (error, results) => {
+                    if (error) reject(new Error(error.message));
+                    resolve(results);
+                });
             });
             return response;
         } catch (error) {
@@ -393,6 +426,24 @@ class DbService {
                 const query = "DELETE FROM appointment WHERE ref_num = ?";
     
                 connection.query(query, [ref_num] , (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                })
+            });
+    
+            return response === 1 ? true : false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+    async deleteDisabledDate(date) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "DELETE FROM disabled_dates WHERE d_dates = ?";
+    
+                connection.query(query, [date] , (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result.affectedRows);
                 })
