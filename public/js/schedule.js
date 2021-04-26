@@ -3,7 +3,7 @@ import {to12hour} from './utilities.js'
 getAppointments();
 
 document.querySelector('table tbody').addEventListener('click', function(event) {
-    if (event.target.className === "delete-row-btn") {
+    if (event.target.className === "btn btn-danger") {
         deleteRowByRefNum(event.target.dataset.id);
     }
 });
@@ -47,7 +47,7 @@ function loadHTMLTable(data) {
         tableHTML += `<td>${st_fname}</td>`;
         tableHTML += `<td>${st_lname}</td>`;
         tableHTML += `<td>${st_email}</td>`;
-        tableHTML += `<td><button class="delete-row-btn" data-id=${ref_num}>Delete</td>`
+        tableHTML += `<td><button class="btn btn-danger" data-id=${ref_num}>Delete</td>`
         tableHTML += "</tr>";
     });
 

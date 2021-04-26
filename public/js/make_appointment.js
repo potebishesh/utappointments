@@ -18,6 +18,7 @@ var message = document.getElementById("appointmentMessage")
 var start = document.getElementById("start");
 var end = document.getElementById("end");
 var description = document.getElementById("description");
+var time_hide = document.getElementById("time_hide");
 
 // disabled_dates array stores dates that does not have office hours (MM-DD-YYYY)
 // availability is a 2D array that stores [day, start_time, end_time] in each row. Eg. [1, '10:00 AM','12:30 PM']
@@ -26,7 +27,8 @@ var disabled_dates = [];
 var availability = [];
 var bookedSpots = [];
 
-// Obtain availability and booked spots from the database.
+// Obtain disabled_dates, availability and booked spots from the database.
+getDisabledDates();
 getAvailability();
 getBookedSpots();
 
@@ -68,9 +70,9 @@ date.addEventListener("focusout", function(){
         error.innerHTML = "Select Date";
     }
 })
-key.addEventListener("focusout", function(){
-    error.innerHTML = "";
-})
+// key.addEventListener("focusout", function(){
+//     error.innerHTML = "";
+// })
 
 
 button.addEventListener("click", checkKeys);
@@ -341,15 +343,33 @@ function enable_time(date){
         jQueryTime('#time').timepicker('option', 'minTime', availability[i][1]); 
         jQueryTime('#time').timepicker('option', 'maxTime', availability[i][2]); 
 
-        time.style.display = "block";
-        time_label.style.display = "block";
+        time_hide.style.display = "block";
     }
     else{
-        time.style.display = "none";
-        time_label.style.display = "none";
+        time_hide.style.display = "none";
     }
 }
 
+
+function getDisabledDates(){
+    fetch('http://localhost:5000/instructor_main/getDisabledDates')
+    .then(response => response.json())
+    .then(data => { fillDisabledDates(data['data']);
+    });
+}
+
+function fillDisabledDates(data){
+    data.forEach(function ({d_dates}){
+        var date = new Date(d_dates);
+        var day = date.getDate().toString().padStart(2, '0');
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var year = date.getFullYear();
+
+        var disabled_date = month + "-" + day + "-" + year;
+
+        disabled_dates.push(disabled_date);
+    });
+}
 
 
 //*********************************** Validation functions ********************************

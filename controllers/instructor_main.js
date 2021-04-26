@@ -20,6 +20,10 @@ exports.renderUpdateKeyPage = (request, response) => {
     response.render('update_key.ejs');
 }
 
+exports.renderDisableDatePage = (request, response) => {
+    response.render('disable_date.ejs');
+}
+
 exports.deleteAvailability = (request, response) => {
     const { day } = request.params;
     const db = dbService.getDbServiceInstance();
@@ -51,10 +55,30 @@ exports.getAvailability = (req, response) => {
       .catch((error) => console.log(error));
 }
 
+exports.disableSelectedDate = (request, response) => {
+    const { date } = request.body;
+    const db = dbService.getDbServiceInstance();
+    const result = db.disableSelectedDate(date);
+  
+    result
+      .then((data) => response.json({ success: data }))
+      .catch((err) => console.log(err));
+}
+
 exports.getAppointments = (req, response) => {
     const db = dbService.getDbServiceInstance();
   
     const result = db.getAppointmentData();
+  
+    result
+      .then((data) => response.json({ data: data }))
+      .catch((error) => console.log(error));
+}
+
+exports.getDisabledDates= (req, response) => {
+    const db = dbService.getDbServiceInstance();
+  
+    const result = db.getDisabledDates();
   
     result
       .then((data) => response.json({ data: data }))
@@ -86,6 +110,18 @@ exports.deleteAppointment = (request, response) => {
     const db = dbService.getDbServiceInstance();
 
     const result = db.deleteRowByRefNum(refnum);
+
+    result
+    .then(data => response.json({success : data}))
+    .catch(err => console.log(err));
+}
+
+
+exports.deleteDisabledDate = (request, response) => {
+    const { date } = request.params;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.deleteDisabledDate(date);
 
     result
     .then(data => response.json({success : data}))
