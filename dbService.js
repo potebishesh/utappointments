@@ -300,6 +300,31 @@ class DbService {
   }
 
   // Using async to get our instructor information
+  async getInstructorDataUname(in_uname) {
+    try {
+      // Creating a new promise in which will handle our query.
+      // We will either resolve or reject the query.
+      // If rejected, will go into catch block.
+      const response = await new Promise((resolve, reject) => {
+        // The query statement.
+        const query = "SELECT * FROM instructor WHERE in_uname = ?";
+        // To parameterize data selection:
+        // const query = "SELECT * FROM appointments WHERE id = ?";
+
+        connection.query(query, [in_uname], (error, results) => {
+          if (error) reject(new Error(error.message));
+          resolve(results);
+        });
+        // To parameterize data selection:
+        // connect.query(query, [id]);
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // Using async to get our instructor information
   async getInstructorDataToken(token) {
     try {
       // Creating a new promise in which will handle our query.
@@ -498,7 +523,7 @@ class DbService {
   }
 
   //insert password reset link expiration time into correct user's column for 1 hour
-  async updatePasswordResetExpiration(email) {
+  async updatePasswordResetExpiration(email, value) {
     try {
       // Creating a new promise in which will handle our query.
       // We will either resolve or reject the query.
@@ -507,19 +532,37 @@ class DbService {
         // The query statement.
         const query =
           "UPDATE instructor SET resetPasswordExpires = ? WHERE in_email = ?;";
-        const input = new Date(Date.now() + 3600000).toISOString().slice(0, 19).replace("T", " ");
-        connection.query(
-          query,
-          [
-            input,
-            email,
-          ],
-          (err, result) => {
-            //input value is a way to convert javascript date value to correct mysql datetime value
-            if (err) reject(new Error(err.message));
-            resolve(result);
-          }
-        );
+        // const input = new Date(Date.now() + 3600000)
+        //   .toISOString()
+        //   .slice(0, 19)
+        //   .replace("T", " ");
+        connection.query(query, [value, email], (err, result) => {
+          //input value is a way to convert javascript date value to correct mysql datetime value
+          if (err) reject(new Error(err.message));
+          resolve(result);
+        });
+      });
+
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  async updatePasswordByEmail(in_pwd, in_email) {
+    try {
+      // Creating a new promise in which will handle our query.
+      // We will either resolve or reject the query.
+      // If rejected, will go into catch block.
+      const response = await new Promise((resolve, reject) => {
+        // The query statement.
+        const query = "UPDATE instructor SET in_pwd = ? WHERE in_email = ?;";
+        connection.query(query, [in_pwd, in_email], (err, result) => {
+          //input value is a way to convert javascript date value to correct mysql datetime value
+          if (err) reject(new Error(err.message));
+          resolve(result);
+        });
       });
 
       return true;
