@@ -47,7 +47,7 @@ function loadHTMLTable(data) {
         tableHTML += `<td>${st_fname}</td>`;
         tableHTML += `<td>${st_lname}</td>`;
         tableHTML += `<td>${st_email}</td>`;
-        tableHTML += `<td><button class="delete-row-btn" data-id=${ref_num}>Delete</td>`
+        tableHTML += `<td><button class="btn btn-danger" data-id=${ref_num}>Delete</td>`
         tableHTML += "</tr>";
     });
 
