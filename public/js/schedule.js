@@ -3,7 +3,7 @@ import {to12hour} from './utilities.js'
 getAppointments();
 
 document.querySelector('table tbody').addEventListener('click', function(event) {
-    if (event.target.className === "delete-row-btn") {
+    if (event.target.className === "btn btn-danger") {
         deleteRowByRefNum(event.target.dataset.id);
     }
 });
