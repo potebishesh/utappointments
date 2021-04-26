@@ -38,6 +38,12 @@
             <%= messages.error %>
         <% } %>
       </div>
+      
+      <% if(message.length > 0) { %>
+        <div class="message">
+          <%= message %>
+        </div>
+      <% }%>
     </form>
     
     <div class="container">

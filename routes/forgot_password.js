@@ -2,19 +2,12 @@
 const { request } = require("express");
 const express = require("express");
 let router = express.Router();
+const controller = require("../controllers/forgot_password");
 
 router.get("/", (req, response) => {
-  response.render("forgot_password.ejs", { message : req.flash('message')});
+  response.render("forgot_password.ejs", { message : req.flash('message'), error : req.flash("error")});
 });
 
-router.post("/", (req, response) => {
-  
-  if(req.body.email.length == 0) {
-    req.flash("message", "Please enter an email");
-    response.redirect("/forgot_password");
-  }
-  response.redirect("/forgot_password");
-
-})
+router.post("/", controller.forgotPassword);
 
 module.exports = router;

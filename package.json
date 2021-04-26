@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^3.2.0",
     "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
@@ -19,8 +21,10 @@
     "jquery-timepicker": "^1.3.3",
     "method-override": "^3.0.0",
     "mysql": "^2.18.1",
+    "nodemailer": "^6.5.0",
     "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "xoauth2": "^1.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

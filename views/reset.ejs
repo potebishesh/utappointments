@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <title>Instructor Password Reset</title>
+  </head>
+  <body>
+    <a href="/" class="header_logo">
+      <img src="../images/home-logo.png" alt="home" width="30" height="25" />
+    </a>
+
+    <h1>Password Reset</h1>
+    <div class="buttons">
+      <form action="/reset/<%=token%>" method="POST">
+        <label for="password">Insert new password:</label>
+        <input type="text" id="password" name="password" class="login_input" />
+        <label for="confirm_password">Confirm Password:</label>
+        <input
+          type="text"
+          id="confirm_password"
+          name="confirm_password"
+          class="login_input"
+        />
+        <input type="submit" value="Reset Password" class="submit_button" />
+      </form>
+    </div>
+    <% if(message.length > 0) { %>
+    <div class="message"><%= message %></div>
+    <% }%> <% if(error.length > 0) { %>
+    <div class="error"><%= error %></div>
+    <% }%>
+  </body>
+</html>
