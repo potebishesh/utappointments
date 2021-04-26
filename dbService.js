@@ -17,7 +17,10 @@ DATABASE=utappointment
 DB_PORT=3306
 HOST=localhost
 SESSION_SECRET=secret
+EMAIL=utappointment@gmail.com
+EMAIL_PASS=4snK+X5>[h*x8Y'H-T,A
 */
+
 const connection = mysql.createConnection({
   host: process.env.HOST,
   user: process.env.USER,
@@ -296,6 +299,31 @@ class DbService {
     }
   }
 
+  // Using async to get our instructor information
+  async getInstructorDataToken(token) {
+    try {
+      // Creating a new promise in which will handle our query.
+      // We will either resolve or reject the query.
+      // If rejected, will go into catch block.
+      const response = await new Promise((resolve, reject) => {
+        // The query statement.
+        const query = "SELECT * FROM instructor WHERE resetPasswordToken = ?";
+        // To parameterize data selection:
+        // const query = "SELECT * FROM appointments WHERE id = ?";
+
+        connection.query(query, [token], (error, results) => {
+          if (error) reject(new Error(error.message));
+          resolve(results);
+        });
+        // To parameterize data selection:
+        // connect.query(query, [id]);
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async updateKeyData(app_key) {
     try {
       // Creating a new promise in which will handle our query.
@@ -479,21 +507,17 @@ class DbService {
         // The query statement.
         const query =
           "UPDATE instructor SET resetPasswordExpires = ? WHERE in_email = ?;";
-
+        const input = new Date(Date.now() + 3600000).toISOString().slice(0, 19).replace("T", " ");
         connection.query(
           query,
           [
-            new Date(Date.now() + 3600000)
-              .toISOString()
-              .slice(0, 19)
-              .replace("T", " "),
+            input,
             email,
           ],
           (err, result) => {
             //input value is a way to convert javascript date value to correct mysql datetime value
             if (err) reject(new Error(err.message));
             resolve(result);
-            console.log(result);
           }
         );
       });

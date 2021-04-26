@@ -15,6 +15,7 @@ const methodOverride = require("method-override");
 const async = require("async");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
+const bodyParser = require("body-parser");
 
 // Express setup
 const app = express();
@@ -25,7 +26,7 @@ const dbService = require("./dbService"); // Imports dbservice class we exported
 
 app.use(cors()); // When we have incoming API call, won't block and we can send to backend.
 app.use(express.json()); // Send API call in json format.
-app.use(express.urlencoded({ extended: false })); // Tell app we want to use data we send from front-end.
+app.use(express.urlencoded({ extended: true })); // Tell app we want to use data we send from front-end.
 
 app.use(flash()); // Flash is for using pop-ups inside our webpage if there is an error or user is not registered/authenticated correctly
 app.use(
@@ -85,6 +86,7 @@ const instructor_main = require("./routes/instructor_main.js");
 const logout = require("./routes/logout.js");
 const check_status = require("./routes/check_status.js");
 const forgot_password = require("./routes/forgot_password.js");
+const reset = require("./routes/reset.js");
 
 // Use the router objects to route these API calls.
 // Use the .js file to handle endpoints that start with URL
@@ -97,6 +99,7 @@ app.use("/", index);
 app.use("/logout", logout);
 app.use("/check_status", check_status);
 app.use("/forgot_password", forgot_password);
+app.use("/reset", reset);
 
 // Run the webserver on specified port in .env file.
 app.listen(process.env.PORT, () =>
