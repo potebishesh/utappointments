@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
    <head>
       <link rel="stylesheet" href="../css/style.css">
@@ -18,9 +19,9 @@
 
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-      
-      <link rel="shortcut icon" type="image/jpg" href="../images/favicon.ico"/>
 
+      <link rel="shortcut icon" type="image/jpg" href="../images/favicon.ico"/>
+      
       <title>Book Appointment</title>
    </head>	
    <body>
@@ -31,26 +32,14 @@
          </a>
          </header>
       </div>
-
+       
+      
+      <div id = "hide">   
       <h1 class="h3 mb-3 mt-5 fw-normal text-center">Please fill and submit<br>to book an appointment</h1>
       <!-- Button code     -->
-      <span id='displayMessage' class = "disable message text-center mx-auto">
-         <p id='appointmentMessage'></p> 
-         
-         <div class="col justify-content-center">
-            <div title="Add to Calendar" class="addeventatc message">
-               Add to Calendar
-               <span id="start" class="start">05/5/2021 08:00 AM</span>
-               <span id="end" class="end">05/15/2021 10:00 AM</span>
-               <span class="timezone">America/Chicago</span>
-               <span class="title">UNIV-SC 1101: Office Hours Appointment</span>
-               <span id="description" class="description">Reference Number</span>
-               <span class="location">Check Syllabus</span>
-            </div>
-         </div>
-      </span>
 
-      <div class="text-center" id = hide>
+
+      <div class="text-center">
          <span id='displayError' class="error"></span>
       </div>
 
@@ -93,13 +82,14 @@
                   </div>
                </div>
 
+               <div id = "time_hide" class = "disable">
                <div class="row-md-2 d-flex justify-content-center my-3">
                   <div class="col-3">               
                      <label for="time" class="form-label">Time</label>
                      <input type="text" class="form-control" id="time" name="time" autocomplete="off" required>
                   </div>
                </div>
-
+               </div>
                <div class="col-12 d-flex mt-5 justify-content-center my-3">
                   <button class="btn btn-primary" id="submit" type="submit">Book Appointment</button>
                </div>
@@ -127,7 +117,25 @@
             </div>
          </div>
       </div>
+      </div>
+    
+      <span id='displayMessage' class = "disable message text-center mx-auto">
+         <h1 class="h3 mb-3 mt-5 fw-normal text-center">Appointment Booked</h1>
+         <p id='appointmentMessage'></p> 
 
+         <div class="col justify-content-center">
+            <div title="Add to Calendar" class="addeventatc message">
+               Add to Calendar
+               <span id="start" class="start">05/5/2021 08:00 AM</span>
+               <span id="end" class="end">05/15/2021 10:00 AM</span>
+               <span class="timezone">America/Chicago</span>
+               <span class="title">UNIV-SC 1101: Office Hours Appointment</span>
+               <span id="description" class="description">Reference Number</span>
+               <span class="location">Check Syllabus</span>
+            </div>
+         </div>
+      </span>
+    
       <p class="mt-5 mb-3 text-muted text-center">UTAppointments 2021</p>
 
       <script type="module" src="js\make_appointment.js"> </script>
