@@ -5,7 +5,8 @@ const async = require("async");
 const crypto = require("crypto");
 const dbService = require("../dbService");
 
-exports.forgotPassword = (req, response) => {
+
+exports.forgotPassword = (req, response, next) => {
   if (req.body.email.length == 0) {
     req.flash("error", "Please enter an email");
     response.redirect("/forgot_password");
@@ -19,8 +20,8 @@ exports.forgotPassword = (req, response) => {
       },
       function (token, done) {
         var db = dbService.getDbServiceInstance();
-        var result = db.getInstructorDataEmail(req.body.email);
-        result
+        var user = db.getInstructorDataEmail(req.body.email);
+        user
           .then((data) => {
             if (data.length === 0) {
               req.flash(
@@ -33,16 +34,41 @@ exports.forgotPassword = (req, response) => {
               token,
               req.body.email
             );
-            passwordTokenResult.catch((err) => console.log(err));
+            //passwordTokenResult.catch((err) => console.log(err));
 
             var passwordExpirationResult = db.updatePasswordResetExpiration(
               req.body.email
             );
-            passwordExpirationResult.catch((err) => console.log(err));
+            //passwordExpirationResult.catch((err) => console.log(err));
           })
-          .catch((err) => console.log(err));
+          .catch((err) => done(err, token));
+          done(null, token);
       },
-    ]);
-    //response.redirect("/forgot_password");
+      function(token, done) {
+        console.log("made it here");
+        var transport = nodemailer.createTransport({
+          service: 'Gmail',
+          auth: {
+            user: process.env.EMAIL,
+            pass: process.env.EMAIL_PASS
+          }
+        });
+        var mailOptions = {
+          to: req.body.email,
+          from: "UTAppointment <no-reply@utappointment.com>",
+          subject: "Your password reset link",
+          text: "To reset your password, please click the following link:\n" +
+          "http://" + req.headers.host + "/reset/" + token + "\n\n" +
+          "If you did not request this password reset, ignore this email and your password will not be changed.\n"
+        };
+        transport.sendMail(mailOptions, function(err) {
+          req.flash("message", "An email has been sent to the requested email with further instructions.");
+          done(err, "done");
+        });
+      }
+    ], function(err) {
+      if(err) return next(err);
+      response.redirect("/forgot_password");
+    });
   }
 };
