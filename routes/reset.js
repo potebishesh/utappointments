@@ -8,6 +8,6 @@ router.get("/", controller.redirectIndexPage);
 
 router.get("/:token", controller.getToken);
 
-router.post("/", controller.reset);
+router.post("/:token", controller.reset);
 
 module.exports = router;
