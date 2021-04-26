@@ -18,6 +18,7 @@ var message = document.getElementById("appointmentMessage")
 var start = document.getElementById("start");
 var end = document.getElementById("end");
 var description = document.getElementById("description");
+var time_hide = document.getElementById("time_hide");
 
 // disabled_dates array stores dates that does not have office hours (MM-DD-YYYY)
 // availability is a 2D array that stores [day, start_time, end_time] in each row. Eg. [1, '10:00 AM','12:30 PM']
@@ -342,12 +343,10 @@ function enable_time(date){
         jQueryTime('#time').timepicker('option', 'minTime', availability[i][1]); 
         jQueryTime('#time').timepicker('option', 'maxTime', availability[i][2]); 
 
-        time.style.display = "block";
-        time_label.style.display = "block";
+        time_hide.style.display = "block";
     }
     else{
-        time.style.display = "none";
-        time_label.style.display = "none";
+        time_hide.style.display = "none";
     }
 }
 
