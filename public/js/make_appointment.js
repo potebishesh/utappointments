@@ -69,9 +69,9 @@ date.addEventListener("focusout", function(){
         error.innerHTML = "Select Date";
     }
 })
-key.addEventListener("focusout", function(){
-    error.innerHTML = "";
-})
+// key.addEventListener("focusout", function(){
+//     error.innerHTML = "";
+// })
 
 
 button.addEventListener("click", checkKeys);
