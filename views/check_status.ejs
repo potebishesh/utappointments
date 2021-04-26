@@ -2,24 +2,30 @@
     <head>
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="../css/style.css">
+
+        
+      <script type="text/javascript" src="https://addevent.com/libs/atc/1.6.1/atc.min.js" async defer></script>
         
         <title>Check Appointment Status</title>
     </head>	
     <body>
-            <a href="/" class="header_logo"> 
-                <img src="../images/home-logo.png" alt="home" width="30" height="25">
-            </a>
-            <h1>Check Appointment Status</h1>
-            <div class="buttons">
-            <form action="">  
-                <label for="reference">Reference Number:</label><br>
-                <input type="text" id="reference" name="reference" class="login_input">
-                <label for="email">Email:</label><br>
-                <input type="text" id="email" name="email" class="login_input">
-                <input input type="button" value="Check Status" id="submit" class="submit_button">
-            </form>
-            </div>  
-    
+        <a href="/" class="header_logo"> 
+            <img src="../images/home-logo.png" alt="home" width="30" height="25">
+        </a>
+        <h1>Check Appointment Status</h1>
+        <div id="inputBox" class="buttons">
+        <form action="">  
+            <label for="reference">Reference Number:</label><br>
+            <input type="text" id="reference" name="reference" class="login_input">
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" name="email" class="login_input">
+            <input input type="button" value="Check Status" id="submit" class="submit_button">
+        </form>
+        </div>  
+        <p id="message" class="message"></p>
+
+        
+        <div id="displayBox" class = "disable">
         <table id="table" class="content-table">
         <thead>
                 <th>Reference Number</th>
@@ -32,7 +38,19 @@
             </thead>
             <tbody></tbody>
         </table>
+
+        <div title="Add to Calendar" class="addeventatc  message">
+            Add to Calendar
+            <span id="start" class="start">05/5/2021 08:00 AM</span>
+            <span id="end" class="end">05/15/2021 10:00 AM</span>
+            <span class="timezone">America/Chicago</span>
+            <span class="title">UNIV-SC 1101: Office Hours Appointment</span>
+            <span id="description" class="description">Reference Number</span>
+            <span class="location">Check Syllabus</span>
+         </div>
+
+         </div>
         
-    <script src="js/check_status.js"></script>
+    <script type="module" src="js/check_status.js"></script>
     </body>
 </html>
