@@ -1,4 +1,5 @@
 const dbService = require("../dbService");
+const nodemailer = require("nodemailer");
 
 exports.renderAppointmentPage = (req, response) => {
     response.render('make_appointment.ejs');
@@ -64,4 +65,30 @@ exports.getBookedSpots = (req, response) => {
   result
     .then((data) => response.json({ data: data }))
     .catch((error) => console.log(error));
+}
+
+exports.sendNotification = (req, response) => {
+  var transport = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+  var mailOptions = {
+    to: req.body.email,
+    from: "UTAppointment <no-reply@utappointment.com>",
+    subject: "Office Hours Appointment",
+    text:
+      "Dear Student,\n\n" + 
+      req.body.text + 
+      "\n\nThanks,\nUTAppointment"
+  };
+  transport.sendMail(mailOptions, function (err) {
+    req.flash(
+      "message",
+      "An email has been sent to the requested email with further instructions."
+    );
+    done(err, "done");
+  });
 }

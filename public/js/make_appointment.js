@@ -147,6 +147,8 @@ function booked(data) {
         var appointmentInfo = data['data'];
         appointmentInfo = appointmentInfo[0];
 
+        var email = appointmentInfo['st_email'];
+
         // Formatting date to MM/DD/YYYY
         let date = new Date(appointmentInfo['app_date']);
         var day = date.getDate().toString().padStart(2, '0');
@@ -177,11 +179,20 @@ function booked(data) {
         description.innerHTML = "Reference Number: " + appointmentInfo['ref_num'];
 
         messageBox.style.display = 'block';
-    });
 
+        sendNotification(email, message_text);
+    })
 }
 
-
+function sendNotification(email_, message_text){
+    fetch('http://localhost:5000/appointment/sendNotification', {
+        headers: {
+            'Content-type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({email: email_, text : message_text})
+    })
+}
 
 function getBookedSpots(){
     fetch('http://localhost:5000/appointment/getBookedSpots')
