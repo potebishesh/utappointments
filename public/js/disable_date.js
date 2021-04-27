@@ -10,7 +10,7 @@ getDisabledDates();
 button.addEventListener("click", disableDate);
 
 document.querySelector('table tbody').addEventListener('click', function(event) {
-    if (event.target.className === "delete-row-btn") {
+    if (event.target.className === "btn btn-danger") {
         deleteRowByDate(event.target.dataset.id);
     }
 });
@@ -67,7 +67,7 @@ function loadHTMLTable(data) {
             disabled_dates.push(disabled_date);
             tableHTML += "<tr>";
             tableHTML += `<td>${disabled_date}</td>`;
-            tableHTML += `<td><button class="delete-row-btn" data-id=${dateYY(disabled_date)}>Delete</td>`
+            tableHTML += `<td><button class="btn btn-danger" data-id=${dateYY(disabled_date)}>Delete</td>`
             tableHTML += "</tr>";
         });
     }
