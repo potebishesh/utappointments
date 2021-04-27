@@ -16,7 +16,7 @@ function updateKeys() {
 
     const temp_key = key1.value;
     
-    fetch('http://localhost:5000/updateKey', {
+    fetch('http://localhost:5000/instructor_main/updateKey', {
         method: 'PATCH',
         headers: {
             'Content-type': 'application/json'
