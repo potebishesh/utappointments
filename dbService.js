@@ -116,7 +116,7 @@ class DbService {
       console.log(error);
     }
   }
-  
+
   // Using a async to get our appointment info
   async getAppointmentInfo(st_fname, st_lname, st_email, app_date, app_time) {
     try {
@@ -148,21 +148,21 @@ class DbService {
   }
 
   async disableSelectedDate(date) {
-      try {
-          const insertId = await new Promise((resolve, reject) => {
-              const query = "INSERT INTO disabled_dates VALUES (?);";
+    try {
+      const insertId = await new Promise((resolve, reject) => {
+        const query = "INSERT INTO disabled_dates VALUES (?);";
 
-              connection.query(query, [date] , (err, result) => {
-                  if (err) reject(new Error(err.message));
-                  resolve(result);
-              });
-          });
-          return true;
-      } catch (error) {
-          console.log(error);
-      }
+        connection.query(query, [date], (err, result) => {
+          if (err) reject(new Error(err.message));
+          resolve(result);
+        });
+      });
+      return true;
+    } catch (error) {
+      console.log(error);
+    }
   }
-  
+
   async getAppointmentStatus(ref_num, st_email) {
     try {
       const response = await new Promise((resolve, reject) => {
@@ -175,7 +175,7 @@ class DbService {
       });
       return response;
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   }
 
@@ -291,20 +291,19 @@ class DbService {
     }
   }
 
-
   async getDisabledDates() {
-      try {
-          const response = await new Promise((resolve, reject) => {
-              const query = "SELECT * FROM disabled_dates";
-              connection.query(query, (error, results) => {
-                  if (error) reject(new Error(error.message));
-                  resolve(results);
-              });
-          });
-          return response;
-      } catch (error) {
-          console.log(error);
-      }
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query = "SELECT * FROM disabled_dates";
+        connection.query(query, (error, results) => {
+          if (error) reject(new Error(error.message));
+          resolve(results);
+        });
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   // Using async to get our instructor information
@@ -544,7 +543,6 @@ class DbService {
         connection.query(query, [token, email], (err, result) => {
           if (err) reject(new Error(err.message));
           resolve(result);
-          console.log(result);
         });
       });
 
@@ -605,25 +603,23 @@ class DbService {
     }
   }
 
+  async deleteDisabledDate(date) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query = "DELETE FROM disabled_dates WHERE d_dates = ?";
 
-    async deleteDisabledDate(date) {
-        try {
-            const response = await new Promise((resolve, reject) => {
-                const query = "DELETE FROM disabled_dates WHERE d_dates = ?";
-    
-                connection.query(query, [date] , (err, result) => {
-                    if (err) reject(new Error(err.message));
-                    resolve(result.affectedRows);
-                })
-            });
-    
-            return response === 1 ? true : false;
-        } catch (error) {
-            console.log(error);
-            return false;
-        }
+        connection.query(query, [date], (err, result) => {
+          if (err) reject(new Error(err.message));
+          resolve(result.affectedRows);
+        });
+      });
+
+      return response === 1 ? true : false;
+    } catch (error) {
+      console.log(error);
+      return false;
     }
-
+  }
 }
 
 // Export our Dbservice class

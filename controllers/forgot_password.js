@@ -34,8 +34,6 @@ exports.forgotPassword = (req, response, next) => {
                 token,
                 req.body.email
               );
-              //passwordTokenResult.catch((err) => console.log(err));
-
               var passwordExpirationResult = db.updatePasswordResetExpiration(
                 req.body.email,
                 new Date(Date.now() + 3600000)
@@ -43,13 +41,11 @@ exports.forgotPassword = (req, response, next) => {
                   .slice(0, 19)
                   .replace("T", " ")
               );
-              //passwordExpirationResult.catch((err) => console.log(err));
             })
             .catch((err) => done(err, token));
           done(null, token);
         },
         function (token, done) {
-          console.log("made it here");
           var transport = nodemailer.createTransport({
             service: "Gmail",
             auth: {

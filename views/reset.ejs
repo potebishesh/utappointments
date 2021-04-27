@@ -16,10 +16,15 @@
     <div class="buttons">
       <form action="/reset/<%=token%>" method="POST">
         <label for="password">Insert new password:</label>
-        <input type="text" id="password" name="password" class="login_input" />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="login_input"
+        />
         <label for="confirm_password">Confirm Password:</label>
         <input
-          type="text"
+          type="password"
           id="confirm_password"
           name="confirm_password"
           class="login_input"
