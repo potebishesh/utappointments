@@ -19,5 +19,6 @@ router.get("/getKeys", controller.getKeys);
 router.post("/getAppointmentInfo", controller.getAppointmentInfo); 
 
 router.get("/getBookedSpots", controller.getBookedSpots);
+router.post("/sendNotification", controller.sendNotification);
 
 module.exports = router;
