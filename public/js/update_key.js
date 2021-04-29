@@ -1,3 +1,4 @@
+var message = document.getElementById("message");
 var button = document.getElementById("submit");
 
 button.addEventListener("click", updateKeys);
@@ -7,11 +8,10 @@ function updateKeys() {
     var key2 = document.getElementById("key2");
 
     if (key1.value != key2.value){
-        return alert("Key does not match. Retry.");
-
+        return message.innerHTML = "Keys do not match.";
     }
     if (key1.value.length < 6){
-        return alert("Key length should be more than 6. Retry.")
+        return message.innerHTML = "Key should me minimum of 6 letters.";
     }
 
     const temp_key = key1.value;
@@ -26,7 +26,9 @@ function updateKeys() {
     .then(response => response.json())
     .then(data => {
         if(data.success){
-            location.reload();
+            key1.value = "";
+            key2.value = "";
+            message.innerHTML = "Key updated successfully.";
         }
     });
 }
