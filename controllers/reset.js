@@ -1,6 +1,7 @@
 const dbService = require("../dbService");
 const bcrypt = require("bcrypt");
 
+
 exports.redirectIndexPage = (req, response) => {
   response.redirect("/");
 };
@@ -43,8 +44,12 @@ exports.reset = (req, response) => {
       return response.redirect("/forgot_password");
     }
     this.changePassword(req.body.password, data);
+
   });
   req.flash("message", "Password updated successfully");
+
+
+
   return response.redirect("/login");
 };
 

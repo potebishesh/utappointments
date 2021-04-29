@@ -22,7 +22,6 @@ const app = express();
 const { response, request } = require("express");
 
 dotenv.config(); // Allows us to access our environment config when we need to.
-const dbService = require("./dbService"); // Imports dbservice class we exported so we can use it.
 
 app.use(cors()); // When we have incoming API call, won't block and we can send to backend.
 app.use(express.json()); // Send API call in json format.
@@ -46,35 +45,8 @@ app.use(express.static("public")); // Tell express our static files are in publi
 app.set("views", __dirname + "/views"); // Set view's folder to right path
 //app.set("view engine", "html"); // Set view engine to HTML instead of EJS
 
-
-const initializePassport = require("./passport-config");
-
-const users = []; // stores our instructors information
-initializeInstructor();
-
-// initializeInstructor gets information about all the instructor from the
-// database and stores it in user array;
-function initializeInstructor() {
-  const db = dbService.getDbServiceInstance();
-  const result = db.getInstructorData();
-
-  result
-    .then((data) => {
-      for (i = 0; i < data.length; i++) {
-        users.push({
-          fname: data[i].in_fname,
-          lname: data[i].in_lname,
-          email: data[i].in_fname,
-          username: data[i].in_uname,
-          password: data[i].in_pwd,
-        });
-      }
-      initializePassport(passport, (username) =>
-        users.find((user) => user.username === username)
-      );
-    })
-    .catch((err) => console.log(err));
-}
+const userService = require("./userService");
+userService.initializeInstructor();
 
 // Requiring files that contain our router objects
 const register = require("./routes/register.js");

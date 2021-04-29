@@ -3,6 +3,7 @@
 const mysql = require("mysql");
 const dotenv = require("dotenv");
 const { response } = require("express");
+const userService = require("./userService");
 let instance = null;
 dotenv.config();
 
@@ -289,6 +290,7 @@ class DbService {
     } catch (error) {
       console.log(error);
     }
+    console.log("database");
   }
 
   async getDisabledDates() {
@@ -595,6 +597,9 @@ class DbService {
           resolve(result);
         });
       });
+
+      // Reintialize users
+      userService.initializeInstructor();
 
       return true;
     } catch (error) {
