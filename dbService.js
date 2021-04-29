@@ -290,7 +290,6 @@ class DbService {
     } catch (error) {
       console.log(error);
     }
-    console.log("database");
   }
 
   async getDisabledDates() {

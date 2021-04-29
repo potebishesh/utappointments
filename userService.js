@@ -23,7 +23,6 @@ exports.initializeInstructor = () => {
             password: data[i].in_pwd,
           });
         }
-        console.log(users);
         initializePassport(passport, (username) =>
           users.find((user) => user.username === username)
         );
